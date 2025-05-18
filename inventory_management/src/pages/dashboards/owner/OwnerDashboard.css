@@ -1,0 +1,329 @@
+/* Reset body and html margins/padding */
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+/* Main dashboard container styling */
+.owner-dashboard {
+  padding-top: 10rem;
+  padding-bottom: 10rem;
+  font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
+  max-width: 95%;
+  margin: 0 auto;
+  color: #e0e0e0;
+  box-sizing: border-box;
+}
+
+/* Ensure the dashboard content starts below the navbar */
+.dashboard-header {
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #2c5a2c;
+  padding-bottom: 1rem;
+  width: 100%;
+}
+
+.dashboard-header h2 {
+  color: #a3e6a3;
+  font-size: 2rem;
+  margin-top: 0.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.welcome-message {
+  color: #d4f5d4;
+  font-size: 1.1rem;
+}
+
+/* Active Card Style */
+.dashboard-card.active {
+  border-color: #a3e6a3;
+  background-color: rgb(23, 75, 23);
+}
+
+/* Management Section Styles */
+.management-section {
+  background-color: #1f3f1f;
+  border: 1px solid #2c5a2c;
+  border-radius: 10px;
+  padding: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 2rem;
+}
+
+.management-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #e0e0e0;
+}
+
+.management-table th, 
+.management-table td {
+  border: 1px solid #2c5a2c;
+  padding: 12px;
+  text-align: left;
+}
+
+.management-table th {
+  background-color: rgba(163, 230, 163, 0.1);
+  color: #a3e6a3;
+  font-weight: 500;
+}
+
+.management-table tr:nth-child(even) {
+  background-color: rgba(163, 230, 163, 0.03);
+}
+
+.management-table tr:hover {
+  background-color: rgba(163, 230, 163, 0.08);
+}
+
+.management-table input {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid #2c5a2c;
+  color: #e0e0e0;
+  padding: 6px;
+  width: 100%;
+  border-radius: 4px;
+}
+
+.management-table input:focus {
+  outline: none;
+  border-color: #a3e6a3;
+}
+
+/* Button Styles */
+.add-button, .edit-button, .delete-button, .cancel-button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  margin: 2px;
+}
+
+.add-button {
+  background-color: #2c5a2c;
+  color: #a3e6a3;
+}
+
+.add-button:hover {
+  background-color: #3a753a;
+}
+
+.edit-button {
+  background-color: rgba(67, 160, 71, 0.2);
+  color: #a3e6a3;
+}
+
+.edit-button:hover {
+  background-color: rgba(67, 160, 71, 0.3);
+}
+
+.delete-button {
+  background-color: rgba(244, 67, 54, 0.2);
+  color: #ff8a80;
+}
+
+.delete-button:hover {
+  background-color: rgba(244, 67, 54, 0.3);
+}
+
+.cancel-button {
+  background-color: rgba(158, 158, 158, 0.2);
+  color: #e0e0e0;
+}
+
+.cancel-button:hover {
+  background-color: rgba(158, 158, 158, 0.3);
+}
+
+/* Status Messages */
+.success-message {
+  color: #a3e6a3;
+  background-color: rgba(163, 230, 163, 0.1);
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+/* Dashboard Cards */
+.dashboard-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+  width: 100%;
+}
+
+.dashboard-card {
+  background-color: #1f3f1f;
+  border: 1px solid #2c5a2c;
+  border-radius: 10px;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+  border-color: #a3e6a3;
+}
+
+.card-icon-container {
+  background-color: rgba(163, 230, 163, 0.2);
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.card-icon {
+  font-size: 2rem;
+  color: #a3e6a3;
+}
+
+.dashboard-card h3 {
+  color: #a3e6a3;
+  margin-bottom: 0.5rem;
+  font-size: 1.3rem;
+}
+
+.dashboard-card p {
+  color: #d4f5d4;
+  margin-top: 0.5rem;
+  font-size: 0.95rem;
+}
+
+/* Dashboard Charts Section */
+.dashboard-charts-section {
+  margin-top: 3rem;
+  width: 100%;
+}
+
+.section-header {
+  margin-bottom: 1.5rem;
+}
+
+.section-header h2 {
+  color: #a3e6a3;
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.section-header p {
+  color: #d4f5d4;
+  font-size: 1rem;
+}
+
+.charts-container1 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  width: 50%;
+}
+
+/* Customize chart container to match dashboard theme */
+.inventory-chart-container {
+  background-color: #1f3f1f;
+  border: 1px solid #2c5a2c;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.inventory-chart-title {
+  color: #a3e6a3;
+  font-size: 1.4rem;
+}
+
+.inventory-chart-description {
+  color: #d4f5d4;
+  margin-bottom: 1.5rem;
+}
+
+.chart-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  color: #a3e6a3;
+  font-size: 1.1rem;
+  background-color: rgba(31, 63, 31, 0.5);
+  border-radius: 8px;
+}
+
+/* Override Recharts text colors to match theme */
+.recharts-text {
+  fill: #d4f5d4 !important;
+}
+
+.recharts-legend-item-text {
+  color: #d4f5d4 !important;
+}
+
+.recharts-cartesian-axis-line,
+.recharts-cartesian-axis-tick-line {
+  stroke: #2c5a2c !important;
+}
+
+.recharts-tooltip-wrapper {
+  background-color: #1f3f1f !important;
+  border: 1px solid #2c5a2c !important;
+}
+
+.recharts-default-tooltip {
+  background-color: #1f3f1f !important;
+  border: 1px solid #2c5a2c !important;
+  color: #d4f5d4 !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .owner-dashboard {
+    padding: 1rem;
+    padding-top: 8rem;
+  }
+  
+  .dashboard-header h2 {
+    font-size: 1.7rem;
+  }
+  
+  .dashboard-cards {
+    grid-template-columns: 1fr;
+  }
+  
+  .section-header h2 {
+    font-size: 1.5rem;
+  }
+  
+  .inventory-chart-container {
+    padding: 1rem;
+  }
+  
+  .inventory-chart-title {
+    font-size: 1.2rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .charts-container {
+    grid-template-columns: 1fr;
+  }
+}

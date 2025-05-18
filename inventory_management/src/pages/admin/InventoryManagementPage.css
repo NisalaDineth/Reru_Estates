@@ -1,0 +1,277 @@
+.inventory-management-page {
+  padding: 10rem;
+  font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
+  max-width: 100%;
+  margin: 0 auto;
+  color: #e0e0e0;
+  box-sizing: border-box;
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 3rem;
+  border-bottom: 1px solid #2c5a2c;
+  padding-bottom: 1rem;
+}
+
+.page-header h2 {
+  color: #a3e6a3;
+  font-size: 2rem;
+  margin: 0;
+}
+
+.header-icon {
+  color: #a3e6a3;
+  font-size: 1.8rem;
+  margin-left: 1rem;
+}
+
+/* Form Styles */
+.form-container {
+  background-color: #1f3f1f;
+  border: 1px solid #2c5a2c;
+  border-radius: 10px;
+  padding: 2rem;
+  margin-bottom: 3rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #2c5a2c;
+  padding-bottom: 0.8rem;
+}
+
+.form-header h3 {
+  color: #a3e6a3;
+  margin: 0;
+  font-size: 1.3rem;
+}
+
+.form-icon {
+  color: #a3e6a3;
+  margin-left: 0.8rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  color: #d4f5d4;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.form-group input {
+  padding: 0.8rem;
+  border: 1px solid #2c5a2c;
+  border-radius: 5px;
+  background-color: #1a331a;
+  color: #e0e0e0;
+  font-size: 1rem;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #a3e6a3;
+  box-shadow: 0 0 0 2px rgba(163, 230, 163, 0.2);
+}
+
+.add-button {
+  background-color: #2c5a2c;
+  color: #e0e0e0;
+  border: none;
+  border-radius: 5px;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.add-button svg {
+  margin-right: 0.5rem;
+}
+
+.add-button:hover {
+  background-color: #3a7a3a;
+  transform: translateY(-2px);
+}
+
+/* Inventory List Styles */
+.inventory-list {
+  background-color: #1f3f1f;
+  border: 1px solid #2c5a2c;
+  border-radius: 10px;
+  padding: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.list-header {
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #2c5a2c;
+  padding-bottom: 0.8rem;
+}
+
+.list-header h3 {
+  color: #a3e6a3;
+  margin: 0;
+  font-size: 1.3rem;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+th, td {
+  border: 1px solid #2c5a2c;
+  padding: 12px;
+  text-align: left;
+}
+
+th {
+  background-color: rgba(163, 230, 163, 0.1);
+  color: #a3e6a3;
+  font-weight: 500;
+}
+
+tr:hover {
+  background-color: rgba(163, 230, 163, 0.05);
+}
+
+.empty-message {
+  text-align: center;
+  padding: 2rem;
+  font-style: italic;
+  color: #d4f5d4;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.edit-button, .delete-button, .save-button, .cancel-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.edit-button {
+  background-color: #2c5a2c;
+  color: #e0e0e0;
+}
+
+.delete-button {
+  background-color: #5a2c2c;
+  color: #e0e0e0;
+}
+
+.save-button {
+  background-color: #2c5a2c;
+  color: #e0e0e0;
+}
+
+.cancel-button {
+  background-color: #4a4a4a;
+  color: #e0e0e0;
+}
+
+.edit-button:hover, .save-button:hover {
+  background-color: #3a7a3a;
+}
+
+.delete-button:hover {
+  background-color: #7a3a3a;
+}
+
+.cancel-button:hover {
+  background-color: #5a5a5a;
+}
+
+/* Loading and Error States */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  color: #d4f5d4;
+}
+
+.loading-spinner {
+  border: 4px solid rgba(163, 230, 163, 0.1);
+  border-left: 4px solid #a3e6a3;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background-color: rgba(90, 44, 44, 0.2);
+  border: 1px solid #5a2c2c;
+  border-radius: 10px;
+  color: #f5d4d4;
+}
+
+.error-container button {
+  margin-top: 1rem;
+  background-color: #2c5a2c;
+  color: #e0e0e0;
+  border: none;
+  border-radius: 5px;
+  padding: 0.8rem 1.5rem;
+  cursor: pointer;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .inventory-management-page {
+    padding: 1rem;
+  }
+  
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+  }
+}

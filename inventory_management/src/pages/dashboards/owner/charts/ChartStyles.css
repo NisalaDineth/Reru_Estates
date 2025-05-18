@@ -1,0 +1,120 @@
+/* InventoryLevelsChart.css */
+
+.inventory-chart-container {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
+.inventory-chart-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.inventory-chart-description {
+  color: #666;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+}
+
+.chart-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+  color: #666;
+  font-size: 1rem;
+}
+
+.recharts-wrapper {
+  margin: 0 auto;
+}
+
+.recharts-text {
+  font-size: 12px;
+  fill: #555;
+}
+
+.recharts-legend-item-text {
+  color: #333 !important;
+}
+
+.recharts-tooltip-wrapper {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  border: 1px solid #ddd !important;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.recharts-default-tooltip {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  border: none !important;
+  border-radius: 4px;
+  padding: 10px !important;
+}
+
+.sort-controls {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.sort-controls span {
+  color: #d4f5d4;
+  margin-right: 10px;
+}
+
+.sort-button {
+  background-color: #1f3f1f;
+  border: 1px solid #2c5a2c;
+  color: #d4f5d4;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.2s;
+}
+
+.sort-button:hover {
+  background-color: #2c5a2c;
+  border-color: #a3e6a3;
+}
+
+.sort-button.active {
+  background-color: #3a753a;
+  border-color: #a3e6a3;
+}
+
+.sort-button svg {
+  font-size: 14px;
+}
+
+
+@media (max-width: 768px) {
+  .inventory-chart-container {
+    padding: 15px;
+    margin-bottom: 20px;
+  }
+  
+  .inventory-chart-title {
+    font-size: 1.3rem;
+  }
+
+    .sort-controls {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .sort-button {
+    width: 100%;
+    justify-content: space-between;
+  }
+}

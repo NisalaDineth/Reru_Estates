@@ -1,0 +1,273 @@
+:root {
+  --primary-dark: #1a3a1a;
+  --primary-light: #a3e6a3;
+  --primary-hover: #2c5a2c;
+  --text-light: #ffffff;
+  --text-highlight: #d4f5d4;
+  --accent: #4caf50;
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+  padding-top: 60px; /* Adjust based on your navbar height */
+}
+
+.navbar {
+  background-color: var(--primary-dark);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  position: fixed; /* Change from sticky to fixed */
+  top: 0;
+  left: 0; /* Add this */
+  z-index: 1000;
+  width: 100%; /* Simplify width */
+  padding: 0;
+  box-sizing: border-box;
+  /* Remove the negative margin calculations */
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.1rem 2rem; /* Reduced from 0.8rem to 0.4rem */
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.logo img {
+  height: 45px; /* Reduced from 40px to 30px */
+  margin-right: 10px;
+}
+
+.logo-text {
+  color: var(--primary-light);
+  font-size: 1.3rem; /* Reduced from 1.5rem to 1.3rem */
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.nav-menu {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-menu li {
+  margin: 0 0.8rem;
+}
+
+.nav-menu a {
+  color: var(--primary-light);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1.1rem; /* Slightly reduced from 1rem */
+  padding: 0.4rem 0.8rem; /* Reduced vertical padding from 0.5rem to 0.4rem */
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+}
+
+.nav-menu a:hover, .nav-menu a:focus {
+  color: var(--primary-light);
+  background-color: rgba(255, 255, 255, 0.05);
+  outline: none;
+}
+
+/* New styles for nav-button to match links */
+.nav-button {
+  color: var(--primary-light);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1.1rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.nav-button:hover, .nav-button:focus {
+  color: var(--primary-light);
+  background-color: rgba(255, 255, 255, 0.05);
+  outline: none;
+}
+
+/* Show hover-like styling on focus for keyboard navigation */
+.nav-button:focus-visible {
+  color: var(--primary-light);
+  background-color: rgba(255, 255, 255, 0.05);
+  outline: 2px solid var(--primary-light);
+  outline-offset: 2px;
+}
+
+.nav-menu a:focus-visible {
+  color: var(--primary-light);
+  background-color: rgba(255, 255, 255, 0.05);
+  outline: 2px solid var(--primary-light);
+  outline-offset: 2px;
+}
+
+.auth-item {
+  margin-left: 0.5rem;
+}
+
+.auth-button {
+  padding: 0.1rem 1.2rem; /* Reduced vertical padding from 0.6rem to 0.4rem */
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  font-size: 0.95rem;
+  height: 40px; /* Reduced from 40px to 32px */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Remove outline on mouse click for auth buttons */
+.auth-button:focus {
+  outline: none;
+}
+
+.auth-button:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.3);
+  outline-offset: 2px;
+}
+
+.login-button {
+  background-color: transparent;
+  color: var(--primary-light);
+  border: 1px solid var(--primary-light);
+}
+
+/* .login-button:hover, .login-button:focus {
+  background-color: rgba(163, 230, 163, 0.1);
+  outline: none;
+} */
+
+.signup-button, .logout-button {
+  background-color: var(--primary-light);
+  color: var(--primary-dark);
+}
+
+.signup-button:hover, .logout-button:hover, 
+.signup-button:focus, .logout-button:focus,
+.login-button:hover, .login-button:focus {
+  background-color: #8fd68f;
+  outline: none;
+}
+
+/* Cart counter styles */
+.cart-item-container {
+  position: relative;
+}
+
+.cart-counter {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: #a3e6a3;
+  color: #1a3a1a;
+  font-size: 12px;
+  font-weight: bold;
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #1f2b1f;
+}
+
+
+.mobile-toggle {
+  display: none;
+  color: var(--text-light);
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* Responsive styles */
+@media (max-width: 992px) {
+  .navbar-container {
+    padding: 0.8rem 1rem;
+  }
+  
+  .mobile-toggle {
+    display: block;
+  }
+
+  .nav-menu {
+    position: fixed;
+    left: -100%;
+    top: 60px; /* Match your navbar height */
+    /* other styles remain the same */
+  }
+  .nav-menu.active {
+    left: 0;
+  }
+
+  .nav-menu li {
+    margin: 0.5rem 0;
+    width: 100%;
+  }
+
+  .nav-menu a {
+    padding: 1rem 2rem;
+    width: 100%;
+    display: flex;
+  }
+  
+  /* Responsive styling for nav-button */
+  .nav-button {
+    padding: 1rem 2rem;
+    width: 100%;
+    display: flex;
+    text-align: left;
+  }
+
+  .auth-item {
+    margin: 0.5rem 2rem;
+    width: calc(100% - 4rem);
+  }
+
+  .auth-button {
+    width: 100%;
+    padding: 0.8rem;
+    margin-top: 0.5rem;
+  }
+}
+
+/* Adjust for mobile */
+@media screen and (max-width: 768px) {
+  .cart-counter {
+    top: 0;
+    right: 10px;
+  }
+}

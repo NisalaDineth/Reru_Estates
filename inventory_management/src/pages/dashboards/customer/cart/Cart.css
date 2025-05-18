@@ -1,0 +1,324 @@
+/* Cart.css - Enhanced visual appeal while maintaining consistency */
+
+/* Main container with subtle gradient background */
+.cart-container {
+  padding: 10rem;
+  padding-top: 12rem;
+  font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
+  max-width: 100%;
+  margin: 0 auto;
+  color: #e0e0e0;
+  box-sizing: border-box;
+  background: linear-gradient(to bottom, rgba(31, 63, 31, 0.4), rgba(31, 63, 31, 0.2));
+  border-radius: 15px;
+}
+
+/* Stylish heading with subtle glow effect */
+.cart-container h2 {
+  color: #a3e6a3;
+  font-size: 2.2rem;
+  margin-bottom: 4rem;
+  border-bottom: 2px solid #2c5a2c;
+  padding-bottom: 1rem;
+  width: 100%;
+  text-align: left;
+  letter-spacing: 1px;
+  position: relative;
+}
+
+.cart-container h2::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 80px;
+  height: 4px;
+  background-color: #a3e6a3;
+  border-radius: 2px;
+}
+
+/* Empty cart message with icon */
+.cart-container p {
+  text-align: center;
+  color: #d4f5d4;
+  font-size: 1.2rem;
+  padding: 2rem;
+  background-color: rgba(31, 63, 31, 0.4);
+  border-radius: 10px;
+  border: 1px dashed #2c5a2c;
+  margin: 2rem 0;
+}
+
+/* Cart items list with improved spacing */
+.cart-container ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem 0;
+  display: grid;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+/* Enhanced cart item cards */
+.cart-container li {
+  background: linear-gradient(145deg, #1f3f1f, #264826);
+  border: 1px solid #2c5a2c;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.cart-container li::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background-color: #a3e6a3;
+  opacity: 0.6;
+  border-radius: 4px 0 0 4px;
+}
+
+.cart-container li:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+  border-color: #a3e6a3;
+}
+
+/* Stylish checkbox */
+.cart-container input[type="checkbox"] {
+  transform: scale(1.3);
+  margin-right: 1rem;
+  accent-color: #a3e6a3;
+  cursor: pointer;
+  position: relative;
+  top: 1px;
+}
+
+/* Item name styling */
+.cart-container li {
+  color: #d4f5d4;
+  font-size: 1.1rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* Crop name styling */
+.cart-container li span.crop-name {
+  font-weight: 600;
+  color: #a3e6a3;
+  margin-right: 10px;
+}
+
+/* Price styling */
+.cart-container li span.price {
+  padding: 4px 8px;
+  font-size: 0.9rem;
+  margin-left: 5px;
+}
+
+/* Quantity input with improved styling */
+.cart-container input[type="number"] {
+  background-color: rgba(163, 230, 163, 0.1);
+  border: 1px solid #2c5a2c;
+  border-radius: 5px;
+  color: #e0e0e0;
+  padding: 8px 5px;
+  width: 70px;
+  margin-left: 8px;
+  font-size: 0.95rem;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.cart-container input[type="number"]:focus {
+  border-color: #a3e6a3;
+  box-shadow: 0 0 0 2px rgba(163, 230, 163, 0.2);
+  outline: none;
+}
+
+/* Available quantity badge */
+.cart-container span.available {
+  background-color: rgba(163, 230, 163, 0.15);
+  color: #a3e6a3;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  margin-left: 10px;
+}
+
+/* Total amount with card-like styling */
+.cart-container > p.total-amount {
+  text-align: right;
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #a3e6a3;
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background-color: rgba(31, 63, 31, 0.7);
+  border-radius: 10px;
+  border-left: 4px solid #a3e6a3;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Enhanced buttons */
+.cart-container button {
+  padding: 10px 15px;
+  border: 1px solid #2c5a2c;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
+  font-size: 0.95rem;
+  background: linear-gradient(to right, rgba(163, 230, 163, 0.2), rgba(163, 230, 163, 0.3));
+  color: #a3e6a3;
+  letter-spacing: 0.5px;
+}
+
+.cart-container button:hover {
+  background: linear-gradient(to right, rgba(163, 230, 163, 0.3), rgba(163, 230, 163, 0.4));
+  border-color: #a3e6a3;
+  box-shadow: 0 0 10px rgba(163, 230, 163, 0.2);
+  transform: translateY(-2px);
+}
+
+.cart-container button:active {
+  transform: translateY(0);
+}
+
+.cart-container button:disabled {
+  background: rgba(163, 230, 163, 0.1);
+  color: #2c5a2c;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+/* Checkout button with pulsing effect */
+.cart-container > button {
+  display: block;
+  width: 100%;
+  padding: 1.2rem;
+  margin-top: 2rem;
+  font-size: 1.2rem;
+  background: linear-gradient(to right, rgba(163, 230, 163, 0.3), rgba(163, 230, 163, 0.4));
+  position: relative;
+  overflow: hidden;
+}
+
+.cart-container > button:not(:disabled)::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.5);
+  opacity: 0;
+  border-radius: 100%;
+  transform: scale(1, 1) translate(-50%);
+  transform-origin: 50% 50%;
+}
+
+.cart-container > button:not(:disabled):hover::after {
+  animation: ripple 1.5s ease-out infinite;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0, 0);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(20, 20);
+    opacity: 0;
+  }
+}
+
+/* Remove button with subtle red tint */
+.cart-container li button {
+  background: linear-gradient(to right, rgba(163, 230, 163, 0.1), rgba(255, 153, 153, 0.2));
+  margin-left: auto;
+  padding: 6px 12px;
+  border-radius: 6px;
+}
+
+.cart-container li button:hover {
+  background: linear-gradient(to right, rgba(163, 230, 163, 0.1), rgba(255, 153, 153, 0.3));
+}
+
+/* Loading state with animation */
+.loading-message {
+  text-align: center;
+  padding: 50px;
+  font-size: 1.2rem;
+  color: #d4f5d4;
+  animation: pulse 1.5s infinite alternate;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.6; }
+  100% { opacity: 1; }
+}
+
+/* Error message with improved styling */
+.error-message {
+  color: #ff9999;
+  text-align: center;
+  margin: 1.5rem 0;
+  padding: 1.2rem;
+  background-color: rgba(255, 153, 153, 0.1);
+  border-radius: 8px;
+  border-left: 4px solid #ff9999;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Login button in error state */
+.error-message + button {
+  margin: 1.5rem auto;
+  padding: 0.8rem 1.5rem;
+  background: linear-gradient(to right, rgba(163, 230, 163, 0.3), rgba(163, 230, 163, 0.4));
+  display: block;
+  width: auto;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .cart-container {
+    padding: 2rem;
+    padding-top: 3rem;
+  }
+  
+  .cart-container h2 {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .cart-container li {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .cart-container li button {
+    margin-top: 15px;
+    margin-left: 0;
+    width: 100%;
+  }
+  
+  .cart-container input[type="checkbox"] {
+    margin-bottom: 10px;
+  }
+  
+  .cart-container > button {
+    padding: 1rem;
+  }
+}
