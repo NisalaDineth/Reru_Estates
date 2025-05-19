@@ -5,6 +5,11 @@ const getAllInventory = async () => {
     return rows;
 };
 
+const getRecentInventory = async (limit = 5) => {
+    const [rows] = await db.query('SELECT * FROM harvestinventory ORDER BY HarvestID DESC LIMIT ?', [limit]);
+    return rows;
+};
+
 const getAllCustomers = async () => {
     const [rows] = await db.query('SELECT * FROM customer');
     return rows;
@@ -94,6 +99,7 @@ const getInventoryItemById = async (id) => {
 
 module.exports = { 
     getAllInventory, 
+    getRecentInventory,
     getAllCustomers, 
     removeCustomer, 
     insertCustomer,

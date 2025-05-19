@@ -4,7 +4,8 @@ const router = express.Router();
 const { 
   updateInventoryItem, 
   getAllInventoryItems, 
-  getInventoryItemById 
+  getInventoryItemById,
+  getRecentInventoryItems
 } = require('../controllers/staffInventoryController');
 const { protect, staffOnly } = require('../middleware/authMiddleware');
 
@@ -14,6 +15,9 @@ router.use(staffOnly);
 
 // Get all inventory items
 router.get('/inventory', getAllInventoryItems);
+
+// Get recent inventory items
+router.get('/inventory/recent', getRecentInventoryItems);
 
 // Get inventory item by ID
 router.get('/inventory/:harvestID', getInventoryItemById);

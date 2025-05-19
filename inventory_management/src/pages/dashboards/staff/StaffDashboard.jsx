@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaClipboardList, FaCalendarCheck, FaTrash, FaCheck, FaClock, FaPlus } from 'react-icons/fa';
+import { FaClipboardList, FaCalendarCheck, FaTrash, FaCheck, FaClock, FaPlus, FaSync } from 'react-icons/fa';
 import './StaffDashboard.css';
+import './RecentHarvests.css';
 
 const StaffDashboard = () => {
   const navigate = useNavigate();  const [staffData, setStaffData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [recentHarvests, setRecentHarvests] = useState([]);
+  const [harvestsLoading, setHarvestsLoading] = useState(false);
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState("");
-  const [taskDueDate, setTaskDueDate] = useState("");
-  useEffect(() => {
+  const [taskDueDate, setTaskDueDate] = useState("");useEffect(() => {
     const fetchStaffData = async () => {
       setIsLoading(true);
       try {
@@ -19,13 +20,8 @@ const StaffDashboard = () => {
         const userData = JSON.parse(localStorage.getItem('user') || '{}');
         setStaffData(userData);
         
-        // Fetch recent harvests (placeholder for now)
-        // In a real implementation, this would be an API call
-        setRecentHarvests([
-          { id: 1, crop: "Tomatoes", quantity: "250 kg", date: "May 17, 2025", quality: "High" },
-          { id: 2, crop: "Potatoes", quantity: "350 kg", date: "May 15, 2025", quality: "Medium" },
-          { id: 3, crop: "Lettuce", quantity: "120 kg", date: "May 12, 2025", quality: "High" },
-        ]);
+        // Fetch recent harvests from the API
+        fetchRecentHarvests();
         
         // Fetch staff tasks
         fetchTasks();
@@ -40,6 +36,48 @@ const StaffDashboard = () => {
 
     fetchStaffData();
   }, []);
+    // Fetch recent harvests from the API
+  const fetchRecentHarvests = async () => {
+    setHarvestsLoading(true);
+    try {
+      const token = localStorage.getItem('token');
+      
+      const response = await fetch('http://localhost:5001/api/staff/inventory/recent?limit=5', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch recent harvests');
+      }
+      
+      const data = await response.json();
+      
+      // Format the data for display
+      const formattedData = data.map(item => ({
+        id: item.HarvestID,
+        crop: item.CropName,
+        quantity: `${item.QuantityAvailable} kg`,
+        date: new Date(item.HarvestingDate).toLocaleDateString(),
+        quality: item.Quality || 'N/A',
+        category: item.Category,
+        price: `$${item.UnitPrice}`
+      }));
+      
+      setRecentHarvests(formattedData);
+    } catch (err) {
+      console.error("Error fetching recent harvests:", err);
+      // Fallback to dummy data if API fails
+      setRecentHarvests([
+        { id: 1, crop: "Tomatoes", quantity: "250 kg", date: "May 17, 2025", quality: "High" },
+        { id: 2, crop: "Potatoes", quantity: "350 kg", date: "May 15, 2025", quality: "Medium" },
+        { id: 3, crop: "Lettuce", quantity: "120 kg", date: "May 12, 2025", quality: "High" },
+      ]);
+    } finally {
+      setHarvestsLoading(false);
+    }
+  };
   
   // Fetch staff tasks from the backend
   const fetchTasks = async () => {
@@ -252,27 +290,59 @@ const StaffDashboard = () => {
           <h2>Recent Harvest Data</h2>
           <p>Overview of recently recorded harvests</p>
         </div>
-        <div className="charts-container">
-          <div className="chart-container">
+        <div className="charts-container">          <div className="chart-container">
             <h3>Recent Harvests</h3>
+            <div className="recent-harvests-header">
+              <p>Showing the 5 most recently added inventory items</p>
+              <button 
+                className={`refresh-button ${harvestsLoading ? 'loading' : ''}`}
+                onClick={fetchRecentHarvests}
+                disabled={harvestsLoading}
+                title="Refresh recent harvests"
+              >
+                <FaSync className={harvestsLoading ? 'spinning' : ''} /> 
+                {harvestsLoading ? 'Loading...' : 'Refresh'}
+              </button>
+            </div>
             <table style={{ width: "100%", borderCollapse: "collapse", marginTop: "1rem" }}>
               <thead>
                 <tr style={{ borderBottom: "1px solid #2c5a2c" }}>
                   <th style={{ textAlign: "left", padding: "0.5rem", color: "#a3e6a3" }}>Crop</th>
+                  <th style={{ textAlign: "left", padding: "0.5rem", color: "#a3e6a3" }}>Category</th>
                   <th style={{ textAlign: "left", padding: "0.5rem", color: "#a3e6a3" }}>Quantity</th>
+                  <th style={{ textAlign: "left", padding: "0.5rem", color: "#a3e6a3" }}>Price</th>
                   <th style={{ textAlign: "left", padding: "0.5rem", color: "#a3e6a3" }}>Date</th>
                   <th style={{ textAlign: "left", padding: "0.5rem", color: "#a3e6a3" }}>Quality</th>
                 </tr>
-              </thead>
-              <tbody>
-                {recentHarvests.map(harvest => (
-                  <tr key={harvest.id} style={{ borderBottom: "1px solid #2c5a2c" }}>
-                    <td style={{ padding: "0.5rem", color: "#d4f5d4" }}>{harvest.crop}</td>
-                    <td style={{ padding: "0.5rem", color: "#d4f5d4" }}>{harvest.quantity}</td>
-                    <td style={{ padding: "0.5rem", color: "#d4f5d4" }}>{harvest.date}</td>
-                    <td style={{ padding: "0.5rem", color: "#d4f5d4" }}>{harvest.quality}</td>
+              </thead>              <tbody>
+                {harvestsLoading ? (
+                  <tr>
+                    <td colSpan="6" style={{ padding: "1rem", textAlign: "center", color: "#d4f5d4" }}>
+                      <div className="loading-spinner">Loading recent harvests...</div>
+                    </td>
                   </tr>
-                ))}
+                ) : recentHarvests.length === 0 ? (
+                  <tr>
+                    <td colSpan="6" style={{ padding: "1rem", textAlign: "center", color: "#d4f5d4" }}>
+                      No recent harvests found. Try refreshing the data.
+                    </td>
+                  </tr>
+                ) : (
+                  recentHarvests.map(harvest => (
+                    <tr key={harvest.id} style={{ borderBottom: "1px solid #2c5a2c" }}>
+                      <td style={{ padding: "0.5rem", color: "#d4f5d4" }}>{harvest.crop}</td>
+                      <td style={{ padding: "0.5rem", color: "#d4f5d4" }}>{harvest.category}</td>
+                      <td style={{ padding: "0.5rem", color: "#d4f5d4" }}>{harvest.quantity}</td>
+                      <td style={{ padding: "0.5rem", color: "#d4f5d4" }}>{harvest.price}</td>
+                      <td style={{ padding: "0.5rem", color: "#d4f5d4" }}>{harvest.date}</td>
+                      <td style={{ padding: "0.5rem", color: "#d4f5d4" }}>
+                        <span className={`quality-badge ${harvest.quality.toLowerCase()}`}>
+                          {harvest.quality}
+                        </span>
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>

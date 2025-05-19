@@ -77,8 +77,23 @@ const getInventoryItemById = async (req, res) => {
   }
 };
 
+// Get recent inventory items
+const getRecentInventoryItems = async (req, res) => {
+  try {
+    const limit = req.query.limit ? parseInt(req.query.limit) : 5;
+    const items = await InventoryModel.getRecentInventory(limit);
+    res.status(200).json(items);
+  } catch (error) {
+    console.error('Error fetching recent inventory items:', error);
+    res.status(500).json({ 
+      message: 'Failed to fetch recent inventory items' 
+    });
+  }
+};
+
 module.exports = {
   updateInventoryItem,
   getAllInventoryItems,
-  getInventoryItemById
+  getInventoryItemById,
+  getRecentInventoryItems
 };
