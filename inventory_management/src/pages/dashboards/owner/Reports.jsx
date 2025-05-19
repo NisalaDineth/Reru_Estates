@@ -22,13 +22,15 @@ const Reports = () => {
     // Fetch data immediately when component mounts
     fetchInventoryData();
   }, []);
-
-  // Effect for regenerating PDF preview when sort options change
+  // Effect for regenerating PDF preview when sort options change or selected reports change
   useEffect(() => {
-    if (inventoryData.length > 0) {
+    if (inventoryData.length > 0 && Object.values(selectedReports).some(value => value)) {
       generatePDFPreview();
+    } else {
+      // Clear the preview if no reports are selected
+      setPdfPreviewUrl(null);
     }
-  }, [inventoryData, sortConfig]);
+  }, [inventoryData, sortConfig, selectedReports]);
 
   const fetchInventoryData = async () => {
     try {
@@ -268,10 +270,9 @@ const Reports = () => {
             onClick={() => handleSort('HarvestingDate')}
           >
             Date {getSortIcon('HarvestingDate')}
-          </button>
-        </div>
+          </button>        </div>
 
-        {inventoryData.length > 0 && (
+        {inventoryData.length > 0 && Object.values(selectedReports).some(value => value) && (
           <div className="preview-section">
             <h3 className="section-title">Preview</h3>
             
