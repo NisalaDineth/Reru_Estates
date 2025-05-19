@@ -14,6 +14,7 @@ import OwnerDashboard from './pages/dashboards/owner/OwnerDashboard.jsx';
 import OwnerInventoryManagement from './pages/dashboards/owner/inventory/OwnerInventoryManagement.jsx';
 import OwnerCustomerManagement from './pages/dashboards/owner/customer/OwnerCustomerManagement.jsx';
 import OwnerStaffManagement from './pages/dashboards/owner/staff/OwnerStaffManagement.jsx';
+import Reports from './pages/dashboards/owner/Reports.jsx';
 import StaffDashboard from './pages/dashboards/staff/StaffDashboard.jsx';
 import AboutUs from './pages/AboutUs.jsx';
 import { CartProvider } from './pages/dashboards/customer/cart/cartcontext';
@@ -53,9 +54,11 @@ function App() {
               <Route path="/owner/inventory" element={<OwnerInventoryManagement />} />
               <Route path="/owner/customer" element={<OwnerCustomerManagement />} />
               <Route path="/owner/staff" element={<OwnerStaffManagement />} />
+              <Route path="/owner/reports" element={<Reports />} />
               <Route path="/staff/dashboard" element={<StaffDashboard />} />
               <Route path="/customer/dashboard" element={<CustomerDashboard />} />
-              <Route path="/checkout" element={<Checkout />} />              <Route path="/customer/cart" element={<Cart />} />
+              <Route path="/checkout" element={<Checkout />} />              
+              <Route path="/customer/cart" element={<Cart />} />
               <Route path="/customer/inventory" element={<CustomerProducts />} />
               <Route path="/customer/payment-success" element={<PaymentSuccess />} />
               <Route path="/customer/purchase-history" element={<PurchaseHistory />} />
