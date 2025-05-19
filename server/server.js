@@ -5,6 +5,7 @@ const inventoryRoutes = require('./routes/inventoryRoutes');
 const cartRoutes = require('./routes/cartRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
 const staffRoutes = require('./routes/staffRoutes');
+const customerRoutes = require('./routes/customerRoutes'); // Add this line
 
 const app = express();
 
@@ -25,6 +26,7 @@ app.use('/api/cart', cartRoutes);
 app.use('/api/payment', paymentRoutes);
 app.use('/api/owner/staff', staffRoutes);
 app.use('/api/customer', inventoryRoutes);
+app.use('/api/owner', customerRoutes); // Add this line
 
 // Start the server
 const PORT = process.env.PORT || 5001;

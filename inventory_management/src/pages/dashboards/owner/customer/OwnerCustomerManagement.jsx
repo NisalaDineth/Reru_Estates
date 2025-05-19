@@ -13,13 +13,19 @@ const OwnerCustomerManagement = () => {
         try {
             setLoading(true);
             const response = await fetch("http://localhost:5001/api/owner/customers");
+            
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(`Failed to fetch customers: ${errorText}`);
+            }
+            
             const data = await response.json();
-            if (!response.ok) throw new Error("Failed to fetch customers");
+            console.log("Fetched customers:", data);
             setCustomers(data);
             setError(null);
         } catch (err) {
             console.error("Fetch error:", err);
-            setError("Failed to load customer data");
+            setError("Failed to load customer data: " + err.message);
         } finally {
             setLoading(false);
         }
@@ -33,30 +39,60 @@ const OwnerCustomerManagement = () => {
         const newStatus = !currentStatus;
         const actionText = newStatus ? "activate" : "deactivate";
         
+        console.log(`Attempting to ${actionText} customer:`, customerID, "New status:", newStatus);
+        
         if (window.confirm(`Are you sure you want to ${actionText} this customer?`)) {
             try {
+                console.log("Sending request to:", `http://localhost:5001/api/owner/customers/${customerID}/status`);
+                console.log("Request body:", { isActive: newStatus });
+                
                 const response = await fetch(`http://localhost:5001/api/owner/customers/${customerID}/status`, {
                     method: 'PATCH',
-                    headers: { "Content-Type": "application/json" },
+                    headers: { 
+                        "Content-Type": "application/json"
+                    },
                     body: JSON.stringify({ isActive: newStatus }),
                 });
                 
+                console.log("Response status:", response.status);
+                
                 if (response.ok) {
-                    alert(`Customer ${actionText}d successfully.`);
+                    const data = await response.json();
+                    console.log("Success response:", data);
+                    alert(data.message || `Customer ${actionText}d successfully.`);
                     fetchCustomers();
                 } else {
-                    const errorData = await response.json().catch(() => null);
-                    alert(errorData?.message || `Failed to ${actionText} customer.`);
+                    // Try to get error details from response
+                    const errorText = await response.text();
+                    console.error("Error response:", errorText);
+                    
+                    let errorMessage;
+                    try {
+                        // Try to parse as JSON
+                        const errorData = JSON.parse(errorText);
+                        errorMessage = errorData.message || errorData.error || `Failed to ${actionText} customer.`;
+                    } catch (e) {
+                        // If not JSON, use text
+                        errorMessage = errorText || `Failed to ${actionText} customer.`;
+                    }
+                    
+                    alert(errorMessage);
                 }
             } catch (err) {
                 console.error("Status update error:", err);
-                alert(`An error occurred while ${actionText}ing the customer.`);
+                alert(`An error occurred while ${actionText}ing the customer: ${err.message}`);
             }
         }
     };
 
     const handleAddCustomer = async () => {
         try {
+            // Basic validation
+            if (!newCustomer.Name || !newCustomer.Email || !newCustomer.Password) {
+                alert("Please fill in all required fields (Name, Email, Password)");
+                return;
+            }
+            
             const response = await fetch("http://localhost:5001/api/owner/customers", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -66,7 +102,7 @@ const OwnerCustomerManagement = () => {
             const data = await response.json();
             
             if (response.ok) {
-                alert(data.message);
+                alert(data.message || "Customer added successfully");
                 setShowModal(false);
                 setNewCustomer({ Name: '', Email: '', PhoneNumber: '', Password: '' });
                 fetchCustomers();

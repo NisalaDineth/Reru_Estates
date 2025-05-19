@@ -14,7 +14,6 @@ const getAllCustomers = async (req, res) => {
 };
 
 // Add a new customer
-// In customerController.js
 const addCustomer = async (req, res) => {
     const { Name, Email, PhoneNumber, Password } = req.body;
     
@@ -49,17 +48,23 @@ const addCustomer = async (req, res) => {
     }
 };
 
-
 // Update customer status
 const updateCustomerStatus = async (req, res) => {
     const customerId = req.params.id;
     const { isActive } = req.body;
     
+    console.log('Updating customer status:', { customerId, isActive });
+    
     try {
+        // Convert to number (MySQL boolean)
+        const activeStatus = isActive ? 1 : 0;
+        
         const [result] = await db.query(
             'UPDATE customer SET isActive = ? WHERE id = ?', 
-            [isActive, customerId]
+            [activeStatus, customerId]
         );
+        
+        console.log('Update result:', result);
         
         if (result.affectedRows === 0) {
             return res.status(404).json({ message: 'Customer not found' });
