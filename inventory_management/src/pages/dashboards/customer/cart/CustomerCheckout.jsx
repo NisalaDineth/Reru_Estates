@@ -9,24 +9,47 @@ const Checkout = () => {
   const location = useLocation();
   const { products, total } = location.state || { products: [], total: 0 };
 
-  const handleConfirmOrder = async () => {
-    const stripe = await stripePromise;
+const handleConfirmOrder = async () => {
+  const stripe = await stripePromise;
 
-    try {
-      const response = await fetch('http://localhost:5001/api/payment/create-checkout-session', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ products })
-      });
+  try {
+    console.log("Sending products to checkout:", products);
+    
+    const response = await fetch('http://localhost:5001/api/payment/create-checkout-session', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ products })
+    });
 
-      const session = await response.json();
-      await stripe.redirectToCheckout({ sessionId: session.id });
-    } catch (error) {
-      console.error('Stripe checkout error:', error);
+    console.log("Response status:", response.status);
+    
+    if (!response.ok) {
+      const errorData = await response.text();
+      console.error("Error response:", errorData);
+      throw new Error(`Payment session creation failed: ${response.status}`);
     }
-  };
+
+    const session = await response.json();
+    console.log("Session data:", session);
+    
+    if (!session.id) {
+      throw new Error("Invalid session data returned from server");
+    }
+
+    const { error } = await stripe.redirectToCheckout({ sessionId: session.id });
+    
+    if (error) {
+      console.error("Stripe redirect error:", error);
+      throw new Error(error.message);
+    }
+  } catch (error) {
+    console.error('Stripe checkout error:', error);
+    alert(`Payment error: ${error.message}`);
+  }
+};
+
 
   return (
     <div className="checkout-container">

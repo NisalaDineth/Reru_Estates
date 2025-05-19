@@ -11,6 +11,11 @@ const app = express();
 
 // Middleware
 app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:5173', // Your frontend URL
+  credentials: true
+}));
+
 
 // Special handling for Stripe webhook route
 // This needs to be before the express.json() middleware to get the raw body for Stripe signature verification
