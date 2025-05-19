@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { FaEnvelope, FaLock, FaExclamationCircle, FaInfoCircle } from "react-icons/fa";
+import { FaEnvelope, FaLock, FaExclamationCircle } from "react-icons/fa";
 import "./LoginPage.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
-  const [info, setInfo] = useState("Use test account: testuser@example.com / testpass123");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();  const handleLogin = async (e) => {
     e.preventDefault();
@@ -16,30 +15,13 @@ const Login = () => {
   
     try {
       console.log("Attempting login with:", { email });
-      
-      // Try the new endpoint first
-      let response;
-      let data;
-      
-      try {
-        response = await fetch('http://localhost:5001/api/auth/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password }),
-        });
-        data = await response.json();
-        console.log("Login response from new endpoint:", data);
-      } catch (err) {
-        console.error("Error with new endpoint, trying fallback:", err);
-        // If the new endpoint fails, try the old one
-        response = await fetch('http://localhost:5001/routes/auth/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password }),
-        });
-        data = await response.json();
-        console.log("Login response from fallback endpoint:", data);
-      }
+      const response = await fetch('http://localhost:5001/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await response.json();
+      console.log("Login response:", data);
   
       if (!response.ok) {
         // Check for specific error messages for deactivated accounts
@@ -80,8 +62,7 @@ const Login = () => {
 
   return (
     <div className="login-page">
-      <div className="login-container">
-        <div className="login-header">
+      <div className="login-container">        <div className="login-header">
           <h2>Welcome Back</h2>
           <p>Sign in to access your account</p>
         </div>        
@@ -89,13 +70,6 @@ const Login = () => {
           <div className="error-message">
             <FaExclamationCircle />
             <span>{error}</span>
-          </div>
-        )}
-        
-        {info && (
-          <div className="info-message">
-            <FaInfoCircle />
-            <span>{info}</span>
           </div>
         )}
         
