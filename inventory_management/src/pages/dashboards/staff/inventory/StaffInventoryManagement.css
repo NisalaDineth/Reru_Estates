@@ -1,0 +1,218 @@
+/* Staff Inventory Management Styles */
+.staff-inventory-container {
+  padding-top: 10rem;
+  padding-bottom: 5rem;
+  max-width: 95%;
+  margin: 0 auto;
+  font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
+  color: #e0e0e0;
+}
+
+.inventory-header {
+  color: #a3e6a3;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.inventory-description {
+  color: #d4f5d4;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #2c5a2c;
+  color: #a3e6a3;
+  padding: 0.6rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 1.5rem;
+  transition: background-color 0.2s ease;
+}
+
+.back-button:hover {
+  background-color: #3a753a;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  background-color: #1f3f1f;
+  border: 1px solid #2c5a2c;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.inventory-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.inventory-table th,
+.inventory-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #2c5a2c;
+}
+
+.inventory-table th {
+  background-color: rgba(163, 230, 163, 0.1);
+  color: #a3e6a3;
+  font-weight: 500;
+}
+
+.inventory-table tr:hover {
+  background-color: rgba(163, 230, 163, 0.05);
+}
+
+.inventory-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.edit-button {
+  background-color: rgba(67, 160, 71, 0.2);
+  color: #a3e6a3;
+  border: none;
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.edit-button:hover {
+  background-color: rgba(67, 160, 71, 0.3);
+}
+
+.empty-inventory {
+  text-align: center;
+  padding: 3rem;
+  background-color: #1f3f1f;
+  border: 1px solid #2c5a2c;
+  border-radius: 8px;
+  color: #8e8e8e;
+}
+
+/* Modal styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background-color: #1f3f1f;
+  border: 1px solid #2c5a2c;
+  border-radius: 8px;
+  padding: 2rem;
+  width: 90%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal h3 {
+  color: #a3e6a3;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  border-bottom: 1px solid #2c5a2c;
+  padding-bottom: 0.5rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #d4f5d4;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #2c5a2c;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #e0e0e0;
+  font-size: 1rem;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #a3e6a3;
+}
+
+.form-control:disabled {
+  background-color: rgba(0, 0, 0, 0.2);
+  cursor: not-allowed;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.save-button,
+.cancel-button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.save-button {
+  background-color: #2c5a2c;
+  color: #a3e6a3;
+}
+
+.save-button:hover {
+  background-color: #3a753a;
+}
+
+.cancel-button {
+  background-color: rgba(158, 158, 158, 0.2);
+  color: #e0e0e0;
+}
+
+.cancel-button:hover {
+  background-color: rgba(158, 158, 158, 0.3);
+}
+
+@media (max-width: 768px) {
+  .staff-inventory-container {
+    padding-top: 7rem;
+  }
+  
+  .inventory-table th,
+  .inventory-table td {
+    padding: 0.75rem 0.5rem;
+    font-size: 0.9rem;
+  }
+  
+  .modal {
+    padding: 1.5rem;
+    width: 95%;
+  }
+}

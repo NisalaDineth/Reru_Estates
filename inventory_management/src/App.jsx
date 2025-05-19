@@ -16,6 +16,8 @@ import OwnerCustomerManagement from './pages/dashboards/owner/customer/OwnerCust
 import OwnerStaffManagement from './pages/dashboards/owner/staff/OwnerStaffManagement.jsx';
 import Reports from './pages/dashboards/owner/Reports.jsx';
 import StaffDashboard from './pages/dashboards/staff/StaffDashboard.jsx';
+import StaffInventoryManagement from './pages/dashboards/staff/inventory/StaffInventoryManagement.jsx';
+import TaskManager from './pages/dashboards/staff/tasks/TaskManager.jsx';
 import AboutUs from './pages/AboutUs.jsx';
 import { CartProvider } from './pages/dashboards/customer/cart/cartcontext';
 import PaymentSuccess from './pages/dashboards/customer/cart/PaymentSuccess.jsx';
@@ -53,9 +55,10 @@ function App() {
               <Route path="/owner/dashboard" element={<OwnerDashboard />} />
               <Route path="/owner/inventory" element={<OwnerInventoryManagement />} />
               <Route path="/owner/customer" element={<OwnerCustomerManagement />} />
-              <Route path="/owner/staff" element={<OwnerStaffManagement />} />
-              <Route path="/owner/reports" element={<Reports />} />
+              <Route path="/owner/staff" element={<OwnerStaffManagement />} />              <Route path="/owner/reports" element={<Reports />} />
               <Route path="/staff/dashboard" element={<StaffDashboard />} />
+              <Route path="/staff/inventory-management" element={<StaffInventoryManagement />} />
+              <Route path="/staff/task-manager" element={<TaskManager />} />
               <Route path="/customer/dashboard" element={<CustomerDashboard />} />
               <Route path="/checkout" element={<Checkout />} />              
               <Route path="/customer/cart" element={<Cart />} />

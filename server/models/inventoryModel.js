@@ -33,11 +33,50 @@ const insertInventoryItem = async (item) => {
 };
 
 const updateInventoryItem = async (id, item) => {
-    const query = 'UPDATE harvestinventory SET CropName = ?, Category = ?, QuantityAvailable = ?, HarvestingDate = ?, UnitPrice = ? WHERE HarvestID = ?';
-    const [result] = await db.query(
-        query,
-        [item.CropName, item.Category, item.QuantityAvailable, item.HarvestingDate, item.UnitPrice, id]
-    );
+    // Build the SET clause dynamically based on the fields provided
+    const fieldsToUpdate = [];
+    const values = [];
+
+    if (item.CropName) {
+        fieldsToUpdate.push('CropName = ?');
+        values.push(item.CropName);
+    }
+
+    if (item.Category) {
+        fieldsToUpdate.push('Category = ?');
+        values.push(item.Category);
+    }
+
+    if (item.QuantityAvailable !== undefined) {
+        fieldsToUpdate.push('QuantityAvailable = ?');
+        values.push(item.QuantityAvailable);
+    }
+
+    if (item.HarvestingDate) {
+        fieldsToUpdate.push('HarvestingDate = ?');
+        values.push(item.HarvestingDate);
+    }
+
+    if (item.UnitPrice !== undefined) {
+        fieldsToUpdate.push('UnitPrice = ?');
+        values.push(item.UnitPrice);
+    }
+
+    if (item.Quality) {
+        fieldsToUpdate.push('Quality = ?');
+        values.push(item.Quality);
+    }
+
+    // Add the ID at the end for the WHERE clause
+    values.push(id);
+
+    // If no fields to update, return
+    if (fieldsToUpdate.length === 0) {
+        return null;
+    }
+
+    const query = `UPDATE harvestinventory SET ${fieldsToUpdate.join(', ')} WHERE HarvestID = ?`;
+    const [result] = await db.query(query, values);
     return result;
 };
 

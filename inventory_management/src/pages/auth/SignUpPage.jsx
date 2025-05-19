@@ -86,7 +86,7 @@ const validateEmail = (email) => {
     const userData = { username, phone, email, password, role: "customer" };
 
     try {
-      const response = await fetch("http://localhost:5001/routes/auth/register/customer", {
+      const response = await fetch("http://localhost:5001/api/auth/register/customer", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(userData),

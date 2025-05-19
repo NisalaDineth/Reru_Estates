@@ -78,13 +78,8 @@ const Navbar = () => {
             <FaHome /> Home
             </button>
           </li>
-          <li><Link to="/AboutUs"><FaInfoCircle /> About Us</Link></li>
-
-          
-          {role === 'staff' && (
-            <li><Link to="/staff/dashboard"><FaTachometerAlt /> Staff Dashboard</Link></li>
-          )}
-          
+          <li><Link to="/AboutUs"><FaInfoCircle /> About Us</Link></li>          
+          {/* Staff dashboard button removed as requested */}
           {role === 'customer' && (
             <li className="cart-item-container">
               <Link to="/customer/cart">

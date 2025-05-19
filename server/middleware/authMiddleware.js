@@ -2,7 +2,8 @@
 const jwt = require('jsonwebtoken');
 const pool = require('../config/db');
 
-const authenticate = async (req, res, next) => {
+// Protect routes - verify token is valid
+const protect = async (req, res, next) => {
   const authHeader = req.header('Authorization');
   const token = authHeader && authHeader.split(' ')[1]; // Bearer token
 
@@ -34,4 +35,13 @@ const authenticate = async (req, res, next) => {
   }
 };
 
-module.exports = authenticate;
+// Staff only middleware
+const staffOnly = (req, res, next) => {
+  if (req.user && req.user.role === 'staff') {
+    next();
+  } else {
+    res.status(403).json({ error: 'Access denied. Staff only.' });
+  }
+};
+
+module.exports = { protect, staffOnly };

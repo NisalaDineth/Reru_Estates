@@ -101,6 +101,17 @@
   border: 1px solid rgba(220, 53, 69, 0.3);
 }
 
+.info-message {
+  display: flex;
+  align-items: center;
+  background-color: rgba(3, 169, 244, 0.1);
+  color: #03a9f4;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  margin-bottom: 1.5rem;
+  border: 1px solid rgba(3, 169, 244, 0.3);
+}
+
 .error-message svg {
   margin-right: 0.5rem;
   font-size: 1rem;
