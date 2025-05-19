@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { loadStripe } from '@stripe/stripe-js';
 import './CustomerCheckout.css'; // Import the CSS file
 
@@ -7,10 +7,12 @@ const stripePromise = loadStripe('pk_test_51RP7LrQhVN6fGceWfR8Qhj1f6uQGFNQdml4pz
 
 const Checkout = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { products, total } = location.state || { products: [], total: 0 };
 
 const handleConfirmOrder = async () => {
   const stripe = await stripePromise;
+  const token = localStorage.getItem('token');
 
   try {
     console.log("Sending products to checkout:", products);
@@ -18,7 +20,8 @@ const handleConfirmOrder = async () => {
     const response = await fetch('http://localhost:5001/api/payment/create-checkout-session', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify({ products })
     });

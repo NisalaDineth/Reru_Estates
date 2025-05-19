@@ -44,10 +44,31 @@ const deleteFromCart = async (req, res) => {
         res.status(500).json({ message: 'Failed to remove item', error: error.message });
     }
 };
+const clearCart = async (req, res) => {
+    const customerId = req.user.id;
+    const { cartIds } = req.body; // Array of CartIDs to clear
+
+    try {
+        let query = 'DELETE FROM Cart WHERE CustomerID = ?';
+        let params = [customerId];
+
+        if (cartIds && cartIds.length > 0) {
+            query = 'DELETE FROM Cart WHERE CustomerID = ? AND CartID IN (?)';
+            params = [customerId, cartIds];
+        }
+
+        await pool.query(query, params);
+        res.status(200).json({ message: 'Selected items cleared from cart' });
+    } catch (error) {
+        console.error('Clear cart error:', error);
+        res.status(500).json({ message: 'Failed to clear cart', error: error.message });
+    }
+};
 
 
 module.exports = {
     addToCart,
     getCart,
-    deleteFromCart
+    deleteFromCart,
+    clearCart
 };

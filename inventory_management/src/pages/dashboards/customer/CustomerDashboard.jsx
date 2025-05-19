@@ -21,7 +21,7 @@ const CustomerDashboard = () => {
       title: 'My Orders',
       description: 'View and manage your orders',
       icon: <FaShoppingBag className="card-icon" />,
-      path: '/customer/orders'
+      path: '/customer/purchase-history'
     },
 
   ];

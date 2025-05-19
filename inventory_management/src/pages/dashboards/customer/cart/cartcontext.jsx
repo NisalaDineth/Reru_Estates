@@ -28,6 +28,31 @@ export const CartProvider = ({ children }) => {
     }
   };
 
+  const clearCart = async (cartIds) => {
+    const token = localStorage.getItem('token');
+    if (!token) return;
+
+    try {
+      const response = await fetch('http://localhost:5001/api/cart/clear', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ cartIds })
+      });
+
+      if (response.ok) {
+        await updateCartCount();
+      } else {
+        throw new Error('Failed to clear cart');
+      }
+    } catch (error) {
+      console.error('Error clearing cart:', error);
+      throw error;
+    }
+  };
+
   // Function to trigger cart refresh
   const refreshCartItems = () => {
     setRefreshCart(prev => !prev);
@@ -39,7 +64,7 @@ export const CartProvider = ({ children }) => {
   }, [refreshCart]);
 
   return (
-    <CartContext.Provider value={{ cartCount, refreshCartItems, updateCartCount }}>
+    <CartContext.Provider value={{ cartCount, refreshCartItems, updateCartCount, clearCart }}>
       {children}
     </CartContext.Provider>
   );

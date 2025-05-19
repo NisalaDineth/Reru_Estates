@@ -29,6 +29,7 @@ app.use(express.json());
 app.use('/routes/auth', authRoutes);
 app.use('/api/owner', inventoryRoutes);
 app.use('/api/cart', cartRoutes);
+app.use('/api/payment/webhook', webhookRoutes);
 app.use('/api/payment', paymentRoutes);
 app.use('/api/owner/staff', staffRoutes);
 app.use('/api/customer', inventoryRoutes);

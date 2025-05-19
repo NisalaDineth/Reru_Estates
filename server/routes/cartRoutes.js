@@ -6,5 +6,6 @@ const authenticate = require('../middleware/authMiddleware'); // JWT auth middle
 router.post('/add', authenticate, cartController.addToCart);
 router.get('/get', authenticate, cartController.getCart);
 router.delete('/remove/:cartId', authenticate, cartController.deleteFromCart);
+router.post('/clear', authenticate, cartController.clearCart);
 
 module.exports = router;

@@ -17,6 +17,8 @@ import OwnerStaffManagement from './pages/dashboards/owner/staff/OwnerStaffManag
 import StaffDashboard from './pages/dashboards/staff/StaffDashboard.jsx';
 import AboutUs from './pages/AboutUs.jsx';
 import { CartProvider } from './pages/dashboards/customer/cart/cartcontext';
+import PaymentSuccess from './pages/dashboards/customer/cart/PaymentSuccess.jsx';
+import PurchaseHistory from './pages/dashboards/customer/purchase/PurchaseHistory.jsx';
 
 function App() {
   useEffect(() => {
@@ -53,9 +55,10 @@ function App() {
               <Route path="/owner/staff" element={<OwnerStaffManagement />} />
               <Route path="/staff/dashboard" element={<StaffDashboard />} />
               <Route path="/customer/dashboard" element={<CustomerDashboard />} />
-              <Route path="/checkout" element={<Checkout />} />
-              <Route path="/customer/cart" element={<Cart />} />
+              <Route path="/checkout" element={<Checkout />} />              <Route path="/customer/cart" element={<Cart />} />
               <Route path="/customer/inventory" element={<CustomerProducts />} />
+              <Route path="/customer/payment-success" element={<PaymentSuccess />} />
+              <Route path="/customer/purchase-history" element={<PurchaseHistory />} />
               <Route path="/AboutUs" element={<AboutUs />} />
             </Routes>
           </main>
