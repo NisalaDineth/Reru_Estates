@@ -11,12 +11,13 @@ const loginUser = async (req, res) => {
     if (!email || !password) {
         return res.status(400).json({ message: "Email and password are required." });
     }
-    console.log("Logging in user:", req.body);
+    console.log("Logging in user with email:", email);
 
     try {
         // Check if user is a customer
         let user = await findCustomerByEmail(email);
         let role = "customer";
+        console.log("Customer search result:", user);
 
         // Check if customer is active
         if (user && role === "customer" && user.isActive === 0) {
@@ -27,27 +28,32 @@ const loginUser = async (req, res) => {
         if (!user) {
             user = await findOwnerByEmail(email);
             role = "owner";
+            console.log("Owner search result:", user);
         }
-        
-        // If not a customer or owner, check if user is a staff member
+          // If not a customer or owner, check if user is a staff member
         if (!user) {
             user = await findStaffByEmail(email);
             role = "staff";
+            console.log("Staff search result:", user);
         }
 
         if (!user || !user.Password) {
+            console.log("User not found or no password:", email);
             return res.status(401).json({ message: "Invalid credentials." });
         }
 
-        console.log("Fetched user:", user);
-
-        const isMatch = await bcrypt.compare(password, user.Password);
+        console.log("Fetched user:", { id: user.id, email: user.Email, role });        const isMatch = await bcrypt.compare(password, user.Password);
+        console.log("Password match:", isMatch);
+        
         if (!isMatch) {
             return res.status(401).json({ message: "Invalid credentials." });
         }
 
-        const token = jwt.sign({ id: user.id, email: user.Email, role }, "your_jwt_secret", { expiresIn: "1h" });
-        console.log("Generated token:", token);
+        // Ensure user.id exists - different table schemas might use id or ID
+        const userId = user.id || user.ID || user.Id;
+        
+        const token = jwt.sign({ id: userId, email: user.Email, role }, "your_jwt_secret", { expiresIn: "1h" });
+        console.log("Generated token for user:", { id: userId, email: user.Email, role });
 
         res.json({
             message: "Login successful",

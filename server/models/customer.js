@@ -14,8 +14,10 @@ const findOwnerByEmail = async (email) => {
 };
 
 const findStaffByEmail = async (email) => {
-    const query = "SELECT * FROM staff WHERE Email = ?";
+    console.log("Searching for staff with email:", email);
+    const query = "SELECT id, name as Name, Email, PhoneNumber, Password, role FROM staff WHERE Email = ?";
     const [rows] = await pool.query(query, [email]);
+    console.log("Staff search result:", rows[0]);
     return rows[0];  // Return the first match, if any
 };
 

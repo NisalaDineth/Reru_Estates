@@ -9,20 +9,18 @@ const Login = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-
   const handleLogin = async (e) => {
     e.preventDefault();
     setError(null);
     setIsLoading(true);
   
     try {
+      console.log("Attempting login with:", { email });
       const response = await fetch('http://localhost:5001/routes/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', },
         body: JSON.stringify({ email, password }),
-      });
-  
-      const data = await response.json();
+      });      const data = await response.json();
       console.log("Login response:", data);
   
       if (!response.ok) {

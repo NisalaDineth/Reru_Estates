@@ -1,6 +1,6 @@
 // staffController.js
 const db = require('../config/db');
-
+const bcrypt = require('bcryptjs');
 
 exports.getAllStaff = async (req, res) => {
     try {
@@ -16,16 +16,20 @@ exports.createStaff = async (req, res) => {
     try {
         const { Name, Email, PhoneNumber, Password } = req.body;
         
+        // Encrypt password before storing
+        const hashedPassword = await bcrypt.hash(Password, 10);
+        
         const [result] = await db.query(
-            'INSERT INTO staff (name, Email, PhoneNumber, Password) VALUES (?, ?, ?, ?)',
-            [Name, Email, PhoneNumber, Password]
+            'INSERT INTO staff (name, Email, PhoneNumber, Password, role) VALUES (?, ?, ?, ?, ?)',
+            [Name, Email, PhoneNumber, hashedPassword, 'staff']
         );
         
         const newStaff = {
             id: result.insertId,
             Name,
             Email,
-            PhoneNumber
+            PhoneNumber,
+            role: 'staff'
         };
         
         res.status(201).json({ 
@@ -70,8 +74,10 @@ exports.updateStaff = async (req, res) => {
         }
         
         if (Password) {
+            // Hash the password before storing
+            const hashedPassword = await bcrypt.hash(Password, 10);
             updateQuery += 'Password = ?, ';
-            updateValues.push(Password);
+            updateValues.push(hashedPassword);
         }
         
         // Remove the trailing comma and space
