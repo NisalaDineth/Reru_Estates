@@ -10,6 +10,11 @@ const PurchaseHistory = () => {
     const fetchPurchaseHistory = async () => {
       try {
         const token = localStorage.getItem('token');
+        if (!token) {
+          throw new Error('Authentication token not found');
+        }
+
+        console.log('Fetching purchase history...');
         const response = await fetch('http://localhost:5001/api/payment/purchase-history', {
           headers: {
             'Authorization': `Bearer ${token}`
@@ -18,32 +23,41 @@ const PurchaseHistory = () => {
 
         if (!response.ok) {
           const errorData = await response.json();
+          console.error('Server returned error:', errorData);
           throw new Error(errorData.message || 'Failed to fetch purchase history');
         }
 
         const data = await response.json();
+        console.log('Received purchase data:', data);
+        
+        if (!Array.isArray(data)) {
+          console.error('Expected array but received:', typeof data);
+          throw new Error('Invalid data format received from server');
+        }
+
         // Group items by purchase ID
         const groupedPurchases = data.reduce((acc, item) => {
+          console.log('Processing purchase item:', item);
           const purchase = acc.find(p => p.id === item.purchase_id);
           if (purchase) {
             purchase.items.push({
-              cropName: item.CropName || item.crop_name,
-              quantity: item.quantity,
-              unitPrice: item.unit_price,
-              subtotal: item.subtotal,
+              cropName: item.CropName || item.crop_name || 'Unknown Product',
+              quantity: Number(item.quantity) || 0,
+              unitPrice: Number(item.unit_price) || 0,
+              subtotal: Number(item.subtotal) || 0,
               harvestId: item.harvest_id
             });
           } else {
             acc.push({
               id: item.purchase_id,
               date: new Date(item.purchase_date),
-              totalAmount: item.total_amount,
+              totalAmount: Number(item.total_amount) || 0,
               stripeSessionId: item.stripe_session_id,
               items: [{
-                cropName: item.CropName || item.crop_name,
-                quantity: item.quantity,
-                unitPrice: item.unit_price,
-                subtotal: item.subtotal,
+                cropName: item.CropName || item.crop_name || 'Unknown Product',
+                quantity: Number(item.quantity) || 0,
+                unitPrice: Number(item.unit_price) || 0,
+                subtotal: Number(item.subtotal) || 0,
                 harvestId: item.harvest_id
               }]
             });
@@ -51,12 +65,14 @@ const PurchaseHistory = () => {
           return acc;
         }, []);
 
+        console.log('Grouped purchases:', groupedPurchases);
+
         // Sort purchases by date, most recent first
         groupedPurchases.sort((a, b) => b.date - a.date);
         setPurchases(groupedPurchases);
       } catch (error) {
-        console.error('Error fetching purchase history:', error);
-        setError(error.message);
+        console.error('Error in purchase history:', error);
+        setError(error.message || 'Failed to load purchase history');
       } finally {
         setLoading(false);
       }

@@ -31,13 +31,32 @@ exports.createPurchase = async (customerId, products, totalAmount, sessionId) =>
 };
 
 exports.getPurchaseHistory = async (customerId) => {
-  const [purchases] = await db.query(
-    `SELECT p.*, pi.*
-     FROM purchases p
-     JOIN purchase_items pi ON p.id = pi.purchase_id
-     WHERE p.customer_id = ?
-     ORDER BY p.purchase_date DESC`,
-    [customerId]
-  );
-  return purchases;
+  try {
+    console.log('Running purchase history query for customer:', customerId);
+    const [purchases] = await db.query(
+      `SELECT 
+        p.id as purchase_id,
+        p.purchase_date,
+        p.total_amount,
+        p.stripe_session_id,
+        pi.id as item_id,
+        pi.quantity,
+        pi.unit_price,
+        pi.subtotal,
+        pi.harvest_id,
+        pi.crop_name,
+        h.CropName as harvest_crop_name
+      FROM purchases p
+      JOIN purchase_items pi ON p.id = pi.purchase_id
+      LEFT JOIN harvestinventory h ON pi.harvest_id = h.HarvestID
+      WHERE p.customer_id = ?
+      ORDER BY p.purchase_date DESC`,
+      [customerId]
+    );
+    console.log('Query results:', purchases);
+    return purchases;
+  } catch (error) {
+    console.error('Database error in getPurchaseHistory:', error);
+    throw error;
+  }
 };

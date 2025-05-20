@@ -102,8 +102,8 @@ function OwnerDashboard() {
       {/* Dashboard charts section */}
       <div className="dashboard-charts-section">
         <div className="section-header">
-          <h2>Farm Analytics</h2>
-          <p>Real-time overview of your farm's inventory and performance</p>
+          <h2>Plantation Analytics</h2>
+          <p>Real-time overview of your plantation's inventory and performance</p>
         </div>
         <div className="charts-container1">
           <div className="inventory-chart-container">
