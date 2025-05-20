@@ -6,7 +6,12 @@ const db = require('../config/db');
 const getAllCustomers = async (req, res) => {
     try {
         const [customers] = await db.query('SELECT id, Name, Email, PhoneNumber, isActive FROM customer');
-        res.json(customers);
+        // Convert MySQL numeric boolean to JavaScript boolean
+        const formattedCustomers = customers.map(cust => ({
+            ...cust,
+            isActive: cust.isActive === 1 || cust.isActive === true
+        }));
+        res.json(formattedCustomers);
     } catch (error) {
         console.error('Error fetching customers:', error);
         res.status(500).json({ message: 'Failed to fetch customers' });
@@ -54,6 +59,16 @@ const updateCustomerStatus = async (req, res) => {
     const { isActive } = req.body;
     
     console.log('Updating customer status:', { customerId, isActive });
+    
+    // Ensure customerId is a valid number
+    if (!customerId || isNaN(parseInt(customerId))) {
+        return res.status(400).json({ message: 'Invalid customer ID' });
+    }
+    
+    // Ensure isActive is a boolean value
+    if (typeof isActive !== 'boolean') {
+        return res.status(400).json({ message: 'isActive must be a boolean value' });
+    }
     
     try {
         // Convert to number (MySQL boolean)
