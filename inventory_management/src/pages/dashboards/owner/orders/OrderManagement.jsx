@@ -5,7 +5,9 @@ import './OrderManagement.css';
 const OrderManagement = () => {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);    const fetchOrders = async () => {
+    const [error, setError] = useState(null);
+
+    const fetchOrders = async () => {
         try {
             const token = localStorage.getItem("token");
             if (!token) {
@@ -14,23 +16,20 @@ const OrderManagement = () => {
                 return;
             }
 
-            console.log('Fetching orders...');
             const response = await fetch('http://localhost:5001/api/owner/orders', {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 }
-            });            const data = await response.json();
-            console.log('Server response:', data);
+            });
+
+            const data = await response.json();
 
             if (!response.ok) {
-                const errorMessage = data.error || data.message || 'Failed to fetch orders';
-                console.error('Server error:', errorMessage, data);
-                throw new Error(errorMessage);
+                throw new Error(data.error || 'Failed to fetch orders');
             }
             
             if (!isValidResponse(data)) {
-                console.error('Invalid data format:', data);
                 throw new Error('Invalid data format received from server');
             }
             
@@ -38,15 +37,16 @@ const OrderManagement = () => {
             setError(null);
         } catch (err) {
             console.error("Fetch error:", err);
-            setError(err.message || "Failed to load orders. Please try again later.");
+            setError(err.message || "Failed to load orders");
         } finally {
             setLoading(false);
         }
-    };    useEffect(() => {
+    };
+
+    useEffect(() => {
         fetchOrders();
     }, []);
 
-    // Add error boundary for order status changes
     const isValidResponse = (data) => {
         return data && Array.isArray(data) && data.every(order => 
             order.id && 
@@ -69,19 +69,18 @@ const OrderManagement = () => {
                 body: JSON.stringify({ status: newStatus })
             });
 
+            const data = await response.json();
+
             if (!response.ok) {
-                throw new Error('Failed to update order status');
+                throw new Error(data.error || 'Failed to update order status');
             }
 
-            // Update local state
             setOrders(orders.map(order => 
                 order.id === orderId ? { ...order, status: newStatus } : order
             ));
-
-            alert(`Order ${orderId} marked as ${newStatus}`);
         } catch (err) {
             console.error("Update error:", err);
-            alert("Failed to update order status");
+            setError("Failed to update order status");
         }
     };
 
@@ -126,7 +125,8 @@ const OrderManagement = () => {
                                                     {item.cropName} x {item.quantity}
                                                 </div>
                                             ))}
-                                        </div>                                    </td>
+                                        </div>
+                                    </td>
                                     <td>Rs. {Number(order.total_amount).toFixed(2)}</td>
                                     <td>
                                         <span className={`status-badge ${order.status}`}>
@@ -134,23 +134,14 @@ const OrderManagement = () => {
                                         </span>
                                     </td>
                                     <td>
-                                        {order.status === 'pending' ? (
-                                            <button 
-                                                className="complete-button"
-                                                onClick={() => handleStatusChange(order.id, 'completed')}
-                                                title="Mark as completed"
-                                            >
-                                                <FaCheck /> Complete
-                                            </button>
-                                        ) : (
-                                            <button 
-                                                className="pending-button"
-                                                onClick={() => handleStatusChange(order.id, 'pending')}
-                                                title="Mark as pending"
-                                            >
-                                                <FaClock /> Mark Pending
-                                            </button>
-                                        )}
+                                        <select
+                                            className={`status-select ${order.status}`}
+                                            value={order.status}
+                                            onChange={(e) => handleStatusChange(order.id, e.target.value)}
+                                        >
+                                            <option value="pending">Pending</option>
+                                            <option value="completed">Completed</option>
+                                        </select>
                                     </td>
                                 </tr>
                             ))}

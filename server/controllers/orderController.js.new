@@ -1,0 +1,139 @@
+const db = require('../config/db');
+
+// Get all orders
+exports.getAllOrders = async (req, res) => {
+    try {
+        console.log('Getting orders for user:', req.user);
+
+        // Basic database check
+        console.log('Testing database connection...');
+        const [dbInfo] = await db.query('SELECT DATABASE() as dbName');
+        console.log('Connected to database:', dbInfo[0].dbName);
+
+        // Get list of tables
+        const [tables] = await db.query('SHOW TABLES');
+        console.log('Available tables:', tables);
+
+        // Try to check if tables exist
+        const [tableCheck] = await db.query(`
+            SELECT TABLE_NAME 
+            FROM information_schema.TABLES 
+            WHERE TABLE_SCHEMA = DATABASE() 
+            AND TABLE_NAME IN ('purchases', 'purchase_items', 'customers', 'harvestinventory')
+        `);
+
+        const existingTables = tableCheck.map(t => t.TABLE_NAME);
+        console.log('Found required tables:', existingTables);
+
+        // Create missing tables if needed
+        if (!existingTables.includes('purchases')) {
+            console.log('Creating purchases table...');
+            await db.query(`
+                CREATE TABLE IF NOT EXISTS purchases (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    customer_id INT NOT NULL,
+                    total_amount DECIMAL(10, 2) NOT NULL,
+                    purchase_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+                    status VARCHAR(20) DEFAULT 'pending',
+                    stripe_session_id VARCHAR(255),
+                    FOREIGN KEY (customer_id) REFERENCES customers(id)
+                )
+            `);
+        }
+
+        if (!existingTables.includes('purchase_items')) {
+            console.log('Creating purchase_items table...');
+            await db.query(`
+                CREATE TABLE IF NOT EXISTS purchase_items (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    purchase_id INT NOT NULL,
+                    harvest_id INT NOT NULL,
+                    quantity INT NOT NULL,
+                    unit_price DECIMAL(10, 2) NOT NULL,
+                    subtotal DECIMAL(10, 2) NOT NULL,
+                    crop_name VARCHAR(255),
+                    FOREIGN KEY (purchase_id) REFERENCES purchases(id),
+                    FOREIGN KEY (harvest_id) REFERENCES harvestinventory(HarvestID)
+                )
+            `);
+        }
+
+        // Try to get orders with minimal joins first
+        console.log('Fetching orders...');
+        const [orders] = await db.query(`
+            SELECT * FROM purchases 
+            ORDER BY purchase_date DESC
+        `);
+        console.log('Raw orders found:', orders ? orders.length : 0);
+
+        // If we have orders, get the customer details
+        if (orders && orders.length > 0) {
+            for (let order of orders) {
+                // Get customer details
+                const [customers] = await db.query(`
+                    SELECT Name as customer_name
+                    FROM customers 
+                    WHERE id = ?
+                `, [order.customer_id]);
+                
+                if (customers.length > 0) {
+                    order.customer_name = customers[0].customer_name;
+                }
+
+                // Get order items
+                const [items] = await db.query(`
+                    SELECT pi.*, h.CropName as cropName
+                    FROM purchase_items pi
+                    LEFT JOIN harvestinventory h ON pi.harvest_id = h.HarvestID
+                    WHERE pi.purchase_id = ?
+                `, [order.id]);
+                
+                order.items = items || [];
+            }
+        }
+
+        res.json(orders || []);
+    } catch (error) {
+        console.error('Error in getAllOrders:', {
+            message: error.message,
+            stack: error.stack,
+            code: error.code,
+            sqlMessage: error.sqlMessage
+        });
+
+        res.status(500).json({
+            error: 'Failed to get orders',
+            details: process.env.NODE_ENV === 'development' ? {
+                message: error.message,
+                code: error.code,
+                sqlMessage: error.sqlMessage
+            } : undefined
+        });
+    }
+};
+
+// Update order status
+exports.updateOrderStatus = async (req, res) => {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    if (!['pending', 'completed'].includes(status)) {
+        return res.status(400).json({ error: 'Invalid status' });
+    }
+
+    try {
+        const [result] = await db.query(
+            'UPDATE purchases SET status = ? WHERE id = ?',
+            [status, id]
+        );
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: 'Order not found' });
+        }
+
+        res.json({ message: 'Order status updated successfully' });
+    } catch (error) {
+        console.error('Error updating order status:', error);
+        res.status(500).json({ error: 'Failed to update order status' });
+    }
+};

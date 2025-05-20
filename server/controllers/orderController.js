@@ -126,23 +126,44 @@ exports.updateOrderStatus = async (req, res) => {
     const { id } = req.params;
     const { status } = req.body;
 
-    if (!['pending', 'completed'].includes(status)) {
-        return res.status(400).json({ error: 'Invalid status' });
-    }
-
     try {
+        // Verify valid status
+        if (!['pending', 'completed'].includes(status)) {
+            return res.status(400).json({ error: 'Invalid status. Must be either "pending" or "completed"' });
+        }
+
+        // Log the update attempt
+        console.log(`Attempting to update order ${id} to status: ${status}`);
+
+        // Update the order status
         const [result] = await db.query(
             'UPDATE purchases SET status = ? WHERE id = ?',
             [status, id]
         );
 
         if (result.affectedRows === 0) {
+            console.log(`No order found with id: ${id}`);
             return res.status(404).json({ error: 'Order not found' });
         }
 
-        res.json({ message: 'Order status updated successfully' });
+        // Get the updated order details
+        const [updatedOrder] = await db.query(
+            'SELECT id, status FROM purchases WHERE id = ?',
+            [id]
+        );
+
+        console.log(`Successfully updated order ${id} to status: ${status}`);
+        
+        res.json({ 
+            message: 'Order status updated successfully',
+            order: updatedOrder[0]
+        });
     } catch (error) {
-        console.error('Error updating order status:', error);
+        console.error('Error updating order status:', {
+            message: error.message,
+            code: error.code,
+            sqlMessage: error.sqlMessage
+        });
         res.status(500).json({ error: 'Failed to update order status' });
     }
 };
