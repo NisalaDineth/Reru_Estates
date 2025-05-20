@@ -17,21 +17,22 @@ const FinancialOverview = () => {
     setFinancialData(dummyData);
   }, []);
 
-  return (
-    <div className="chart-wrapper">
+  return (    <div className="chart-wrapper">
       <h3 className="chart-title">Financial Overview</h3>
       <div className="chart-container">
-        <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={financialData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#2c5a2c" />
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={financialData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#2c5a2c" opacity={0.3} />
             <XAxis dataKey="month" stroke="#d4f5d4" />
             <YAxis stroke="#d4f5d4" />
             <Tooltip 
               contentStyle={{ 
                 backgroundColor: '#1f3f1f',
                 border: '1px solid #2c5a2c',
-                color: '#d4f5d4'
+                color: '#d4f5d4',
+                borderRadius: '4px'
               }}
+              cursor={{ fill: 'rgba(163, 230, 163, 0.1)' }}
             />
             <Bar dataKey="income" name="Income" fill="#4CAF50" />
             <Bar dataKey="expenses" name="Expenses" fill="#FF5252" />
