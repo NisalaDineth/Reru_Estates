@@ -9,6 +9,7 @@ const staffRoutes = require('./routes/staffRoutes');
 const customerRoutes = require('./routes/customerRoutes'); 
 const taskRoutes = require('./routes/taskRoutes'); 
 const staffInventoryRoutes = require('./routes/staffInventoryRoutes');
+const orderRoutes = require('./routes/orderRoutes');
 
 const app = express();
 
@@ -39,7 +40,26 @@ app.use('/api/customer', inventoryRoutes);
 app.use('/api/owner', customerRoutes); 
 app.use('/api/staff', taskRoutes);
 app.use('/api/staff', staffInventoryRoutes);
+app.use('/api/owner', orderRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 5001;
+// Error handling middleware
+app.use((err, req, res, next) => {
+    console.error('Global error handler:', {
+        message: err.message,
+        stack: err.stack,
+        code: err.code,
+        sqlMessage: err.sqlMessage
+    });
+    res.status(500).json({ 
+        error: 'Internal server error',
+        details: process.env.NODE_ENV === 'development' ? {
+            message: err.message,
+            code: err.code,
+            sqlMessage: err.sqlMessage
+        } : undefined
+    });
+});
+
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

@@ -62,7 +62,6 @@ function OwnerDashboard() {
       icon: <FaClipboardList className="card-icon" />
     }
   ];
-
   const handleCardClick = (id) => {
     setActiveSection(id);
     if (id === 'inventory') {
@@ -71,6 +70,8 @@ function OwnerDashboard() {
       navigate('/owner/customer');
     } else if (id === 'staff') {
       navigate('/owner/staff');
+    } else if (id === 'orders') {
+      navigate('/owner/orders');
     }
   };
 

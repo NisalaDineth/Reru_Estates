@@ -1,0 +1,120 @@
+.order-management-container {
+    max-width: 1200px;
+    margin: 10% auto;
+    padding: 0 1.5rem;
+}
+
+.order-header {
+    margin-bottom: 1rem;
+    color: var(--primary-light);
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.order-description {
+    color: var(--text-light);
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+}
+
+.table-wrapper {
+    background-color: #1f3f1f;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    margin-top: 1rem;
+}
+
+.orders-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #1f3f1f;
+}
+
+.orders-table th,
+.orders-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.orders-table th {
+    background-color: #1a3a1a;
+    font-weight: 600;
+    color: var(--text-light);
+}
+
+.orders-table tr:hover {
+    background-color: #2a4a2a;
+}
+
+.completed-row {
+    background-color: rgba(67, 160, 71, 0.1);
+}
+
+.order-items {
+    max-height: 100px;
+    overflow-y: auto;
+}
+
+.order-item {
+    padding: 0.25rem 0;
+    font-size: 0.9rem;
+}
+
+.status-badge {
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.status-badge.pending {
+    background-color: rgba(255, 152, 0, 0.2);
+    color: #ffa726;
+}
+
+.status-badge.completed {
+    background-color: rgba(67, 160, 71, 0.2);
+    color: #66bb6a;
+}
+
+.complete-button,
+.pending-button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.complete-button {
+    background-color: rgba(67, 160, 71, 0.2);
+    color: #66bb6a;
+}
+
+.complete-button:hover {
+    background-color: rgba(67, 160, 71, 0.3);
+}
+
+.pending-button {
+    background-color: rgba(255, 152, 0, 0.2);
+    color: #ffa726;
+}
+
+.pending-button:hover {
+    background-color: rgba(255, 152, 0, 0.3);
+}
+
+.empty-orders {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #777;
+    background-color: #1f3f1f;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+}

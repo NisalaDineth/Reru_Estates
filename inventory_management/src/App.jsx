@@ -14,6 +14,7 @@ import OwnerDashboard from './pages/dashboards/owner/OwnerDashboard.jsx';
 import OwnerInventoryManagement from './pages/dashboards/owner/inventory/OwnerInventoryManagement.jsx';
 import OwnerCustomerManagement from './pages/dashboards/owner/customer/OwnerCustomerManagement.jsx';
 import OwnerStaffManagement from './pages/dashboards/owner/staff/OwnerStaffManagement.jsx';
+import OrderManagement from './pages/dashboards/owner/orders/OrderManagement.jsx';
 import Reports from './pages/dashboards/owner/Reports.jsx';
 import StaffDashboard from './pages/dashboards/staff/StaffDashboard.jsx';
 import StaffInventoryManagement from './pages/dashboards/staff/inventory/StaffInventoryManagement.jsx';
@@ -55,7 +56,9 @@ function App() {
               <Route path="/owner/dashboard" element={<OwnerDashboard />} />
               <Route path="/owner/inventory" element={<OwnerInventoryManagement />} />
               <Route path="/owner/customer" element={<OwnerCustomerManagement />} />
-              <Route path="/owner/staff" element={<OwnerStaffManagement />} />              <Route path="/owner/reports" element={<Reports />} />
+              <Route path="/owner/staff" element={<OwnerStaffManagement />} />
+              <Route path="/owner/orders" element={<OrderManagement />} />
+              <Route path="/owner/reports" element={<Reports />} />
               <Route path="/staff/dashboard" element={<StaffDashboard />} />
               <Route path="/staff/inventory-management" element={<StaffInventoryManagement />} />
               <Route path="/staff/task-manager" element={<TaskManager />} />

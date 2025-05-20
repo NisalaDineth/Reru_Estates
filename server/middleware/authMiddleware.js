@@ -4,20 +4,27 @@ const pool = require('../config/db');
 
 // Protect routes - verify token is valid
 const protect = async (req, res, next) => {
+  console.log('Auth headers:', req.headers);
   const authHeader = req.header('Authorization');
+  console.log('Auth header:', authHeader);
+  
   const token = authHeader && authHeader.split(' ')[1]; // Bearer token
+  console.log('Token:', token);
 
   if (!token) {
+    console.error('No token provided');
     return res.status(401).json({ error: 'Access denied. No token provided.' });
   }
 
   try {
+    console.log('Verifying token...');
     const decoded = jwt.verify(token, 'your_jwt_secret');
+    console.log('Decoded token:', decoded);
     
     // Check if user is customer and verify isActive status
     if (decoded.role === 'customer') {
+      console.log('Verifying customer status...');
       const [rows] = await pool.query('SELECT isActive FROM customer WHERE id = ?', [decoded.id]);
-      
       if (!rows.length) {
         return res.status(401).json({ error: 'User not found.' });
       }
