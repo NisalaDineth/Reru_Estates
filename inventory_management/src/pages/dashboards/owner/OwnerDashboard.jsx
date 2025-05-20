@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { FaBoxOpen, FaUsers, FaUserTie, FaClipboardList } from 'react-icons/fa';
+import { FaBoxOpen, FaUsers, FaUserTie, FaClipboardList, FaChartLine } from 'react-icons/fa';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import InventoryLevelsChart from './charts/InventoryLevels';
-import CustomerGrowthChart from './charts/CustomerGrowth'; // New chart import
+import FinancialOverview from './charts/FinancialOverview';
 import './OwnerDashboard.css';
 
 function OwnerDashboard() {
@@ -26,6 +26,10 @@ function OwnerDashboard() {
         setActiveSection('customers');
       } else if (path.includes('/owner/staff')) {
         setActiveSection('staff');
+      } else if (path.includes('/owner/orders')) {
+        setActiveSection('orders');
+      } else if (path.includes('/owner/finance')) {
+        setActiveSection('finance');
       } else {
         setActiveSection(null);
       }
@@ -60,8 +64,15 @@ function OwnerDashboard() {
       title: 'Order Management',
       description: 'Manage customer orders',
       icon: <FaClipboardList className="card-icon" />
+    },
+    {
+      id: 'finance',
+      title: 'Financial Management',
+      description: 'Track income and expenses',
+      icon: <FaChartLine className="card-icon" />
     }
   ];
+
   const handleCardClick = (id) => {
     setActiveSection(id);
     if (id === 'inventory') {
@@ -72,6 +83,8 @@ function OwnerDashboard() {
       navigate('/owner/staff');
     } else if (id === 'orders') {
       navigate('/owner/orders');
+    } else if (id === 'finance') {
+      navigate('/owner/finance');
     }
   };
 
@@ -103,15 +116,15 @@ function OwnerDashboard() {
       {/* Dashboard charts section */}
       <div className="dashboard-charts-section">
         <div className="section-header">
-          <h2>Plantation Analytics</h2>
-          <p>Real-time overview of your plantation's inventory and performance</p>
+          <h2>Business Analytics</h2>
+          <p>Real-time overview of your business performance</p>
         </div>
         <div className="charts-container1">
           <div className="inventory-chart-container">
             <InventoryLevelsChart />
           </div>
-          <div className="customer-chart-container">
-            <CustomerGrowthChart />
+          <div className="financial-chart-container">
+            <FinancialOverview />
           </div>
         </div>
       </div>

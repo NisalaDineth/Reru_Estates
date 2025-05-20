@@ -1,0 +1,271 @@
+/* Finance container styles */
+.finance-container {
+  padding: 2rem;
+  padding-top: 12rem;
+  max-width: 95%;
+  margin: 0 auto;
+  font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
+}
+
+.finance-header {
+  color: #a3e6a3;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+}
+
+/* Add button styles */
+.add-button {
+  background-color: #2c5a2c;
+  color: #d4f5d4;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  transition: all 0.3s ease;
+}
+
+.add-button:hover {
+  background-color: #357935;
+}
+
+/* Table styles */
+.table-wrapper {
+  background-color: #1f3f1f;
+  border-radius: 10px;
+  overflow-x: auto;
+  margin-top: 1rem;
+}
+
+.finance-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #d4f5d4;
+}
+
+.finance-table th,
+.finance-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #2c5a2c;
+}
+
+.finance-table th {
+  background-color: #2c5a2c;
+  color: #d4f5d4;
+  font-weight: bold;
+}
+
+.finance-table tr:hover {
+  background-color: #2c5a2c30;
+}
+
+/* Action buttons styles */
+.action-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.edit-button,
+.delete-button {
+  padding: 0.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  transition: all 0.3s ease;
+}
+
+.edit-button {
+  background-color: #2196F3;
+  color: white;
+}
+
+.delete-button {
+  background-color: #FF5252;
+  color: white;
+}
+
+.edit-button:hover {
+  background-color: #1976D2;
+}
+
+.delete-button:hover {
+  background-color: #D32F2F;
+}
+
+/* Modal styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background-color: #1f3f1f;
+  padding: 2rem;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 500px;
+}
+
+.modal h3 {
+  color: #a3e6a3;
+  margin-bottom: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #d4f5d4;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #2c5a2c;
+  border-radius: 4px;
+  background-color: #2c5a2c30;
+  color: #d4f5d4;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #a3e6a3;
+}
+
+textarea.form-control {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.cancel-button,
+.save-button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cancel-button {
+  background-color: transparent;
+  border: 1px solid #2c5a2c;
+  color: #d4f5d4;
+}
+
+.save-button {
+  background-color: #2c5a2c;
+  color: #d4f5d4;
+}
+
+.cancel-button:hover {
+  background-color: #2c5a2c30;
+}
+
+.save-button:hover {
+  background-color: #357935;
+}
+
+/* Empty state styles */
+.empty-finance {
+  text-align: center;
+  padding: 2rem;
+  color: #d4f5d4;
+}
+
+/* Loading and error states */
+.finance-container > div:first-child {
+  text-align: center;
+  padding: 2rem;
+  color: #d4f5d4;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .finance-container {
+    padding: 1rem;
+    padding-top: 8rem;
+  }
+
+  .finance-header {
+    font-size: 1.5rem;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .modal {
+    padding: 1rem;
+    margin: 1rem;
+  }
+}
+
+/* Additional chart styles */
+.charts-container1 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.financial-summary {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  background-color: #2c5a2c30;
+  border-radius: 5px;
+  margin-top: 1rem;
+}
+
+.summary-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.summary-item .label {
+  color: #d4f5d4;
+  margin-bottom: 0.5rem;
+}
+
+.summary-item .value {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.value.income {
+  color: #4CAF50;
+}
+
+.value.expenses {
+  color: #FF5252;
+}
+
+.value.profit {
+  color: #2196F3;
+}

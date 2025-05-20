@@ -15,6 +15,7 @@ import OwnerInventoryManagement from './pages/dashboards/owner/inventory/OwnerIn
 import OwnerCustomerManagement from './pages/dashboards/owner/customer/OwnerCustomerManagement.jsx';
 import OwnerStaffManagement from './pages/dashboards/owner/staff/OwnerStaffManagement.jsx';
 import OrderManagement from './pages/dashboards/owner/orders/OrderManagement.jsx';
+import FinancialManagement from './pages/dashboards/owner/finance/FinancialManagement.jsx';
 import Reports from './pages/dashboards/owner/Reports.jsx';
 import StaffDashboard from './pages/dashboards/staff/StaffDashboard.jsx';
 import StaffInventoryManagement from './pages/dashboards/staff/inventory/StaffInventoryManagement.jsx';
@@ -58,6 +59,7 @@ function App() {
               <Route path="/owner/customer" element={<OwnerCustomerManagement />} />
               <Route path="/owner/staff" element={<OwnerStaffManagement />} />
               <Route path="/owner/orders" element={<OrderManagement />} />
+              <Route path="/owner/finance" element={<FinancialManagement />} />
               <Route path="/owner/reports" element={<Reports />} />
               <Route path="/staff/dashboard" element={<StaffDashboard />} />
               <Route path="/staff/inventory-management" element={<StaffInventoryManagement />} />
