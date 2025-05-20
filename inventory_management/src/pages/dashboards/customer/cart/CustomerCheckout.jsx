@@ -24,14 +24,12 @@ const handleConfirmOrder = async () => {
         'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify({ products })
-    });
-
-    console.log("Response status:", response.status);
+    });    console.log("Response status:", response.status);
     
     if (!response.ok) {
       const errorData = await response.text();
       console.error("Error response:", errorData);
-      throw new Error(`Payment session creation failed: ${response.status}`);
+      throw new Error(`Payment session creation failed: ${response.status} - ${errorData}`);
     }
 
     const session = await response.json();

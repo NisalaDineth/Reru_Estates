@@ -19,7 +19,13 @@ const Login = () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
+        credentials: 'include' // Include cookies if needed
       });
+      
+      if (!response) {
+        throw new Error("Network error: No response received");
+      }
+      
       const data = await response.json();
       console.log("Login response:", data);
   
@@ -51,10 +57,14 @@ const Login = () => {
         navigate("/staff/dashboard");
       } else {
         throw new Error("Invalid role");
-      }
-    } catch (err) {
+      }    } catch (err) {
       console.error("Login failed:", err);
-      setError(err.message);
+      if (err.name === 'TypeError' && err.message.includes('Failed to fetch')) {
+        setError("Network error: Could not connect to the server. Please check your connection or try again later.");
+        console.error("Network error details:", err);
+      } else {
+        setError(err.message || "An unexpected error occurred");
+      }
     } finally {
       setIsLoading(false);
     }

@@ -15,11 +15,9 @@ const isItemInCart = async (customerID, harvestID) => {
     const [rows] = await pool.query(query, [customerID, harvestID]);
     return rows.length > 0;
 };
-
-
     const getCartItems = async (customerId) => {
         const query = `
-            SELECT c.CartID, h.CropName, h.Category, h.UnitPrice, h.QuantityAvailable 
+            SELECT c.CartID, c.HarvestID, h.CropName, h.Category, h.UnitPrice, h.QuantityAvailable 
             FROM Cart c 
             JOIN harvestinventory h ON c.HarvestID = h.HarvestID 
             WHERE c.CustomerID = ?

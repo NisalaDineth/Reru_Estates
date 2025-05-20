@@ -109,7 +109,6 @@ const Cart = () => {
       }, 0);
     setTotalAmount(total);
   }, [selectedItems, cartItems, quantities]);
-
   const handleCheckout = () => {
     const selectedProducts = cartItems
       .filter(item => selectedItems.includes(item.CartID))
@@ -118,6 +117,16 @@ const Cart = () => {
         required_quantity: quantities[item.CartID] || 1,
         sub_total: item.UnitPrice * (quantities[item.CartID] || 1)
       }));
+
+    // Debug log to ensure HarvestID is included
+    console.log('Selected products for checkout:', selectedProducts);
+    
+    // Check if HarvestID is missing in any product
+    const missingHarvestId = selectedProducts.some(product => !product.HarvestID);
+    if (missingHarvestId) {
+      alert('Error: Some products are missing the HarvestID. Please try again or contact support.');
+      return;
+    }
 
     navigate('/checkout', {
       state: {

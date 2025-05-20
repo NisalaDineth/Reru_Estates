@@ -97,6 +97,33 @@ const getInventoryItemById = async (id) => {
     return rows[0];
 };
 
+// Reduce inventory quantity after purchase
+const reduceInventoryQuantity = async (harvestId, quantity) => {
+    // First check if the inventory has enough quantity
+    const [inventory] = await db.query(
+        'SELECT HarvestID, CropName, QuantityAvailable FROM harvestinventory WHERE HarvestID = ?',
+        [harvestId]
+    );
+    
+    if (!inventory.length) {
+        throw new Error(`Product ID ${harvestId} not found in inventory`);
+    }
+    
+    if (inventory[0].QuantityAvailable < quantity) {
+        throw new Error(`Insufficient inventory for product ${inventory[0].CropName} (ID: ${harvestId}). Requested: ${quantity}, Available: ${inventory[0].QuantityAvailable}`);
+    }
+    
+    // Update the inventory quantity with a safety check to never go below zero
+    const query = 'UPDATE harvestinventory SET QuantityAvailable = GREATEST(QuantityAvailable - ?, 0) WHERE HarvestID = ?';
+    const [result] = await db.query(query, [quantity, harvestId]);
+    
+    if (result.affectedRows === 0) {
+        throw new Error(`Failed to update inventory for product ID ${harvestId}`);
+    }
+    
+    return result;
+};
+
 module.exports = { 
     getAllInventory, 
     getRecentInventory,
@@ -106,5 +133,6 @@ module.exports = {
     insertInventoryItem,
     updateInventoryItem,
     removeInventoryItem,
-    getInventoryItemById
+    getInventoryItemById,
+    reduceInventoryQuantity
 };
