@@ -28,12 +28,11 @@ const FinancialManagement = () => {
     'Marketing',
     'Other'
   ];
-
   const fetchExpenses = async () => {
     try {
       setLoading(true);
       const token = localStorage.getItem("token");
-      // TODO: Replace with actual API endpoint
+      // Using the implemented API endpoint
       const response = await fetch('http://localhost:5001/api/owner/expenses', {
         headers: {
           'Authorization': `Bearer ${token}`

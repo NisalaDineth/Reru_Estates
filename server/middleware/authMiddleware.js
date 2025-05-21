@@ -51,4 +51,13 @@ const staffOnly = (req, res, next) => {
   }
 };
 
-module.exports = { protect, staffOnly };
+// Owner only middleware
+const ownerOnly = (req, res, next) => {
+  if (req.user && req.user.role === 'owner') {
+    next();
+  } else {
+    res.status(403).json({ error: 'Access denied. Owner only.' });
+  }
+};
+
+module.exports = { protect, staffOnly, ownerOnly };

@@ -10,6 +10,7 @@ const customerRoutes = require('./routes/customerRoutes');
 const taskRoutes = require('./routes/taskRoutes'); 
 const staffInventoryRoutes = require('./routes/staffInventoryRoutes');
 const orderRoutes = require('./routes/orderRoutes');
+const expenseRoutes = require('./routes/expenseRoutes');
 
 const app = express();
 
@@ -41,6 +42,7 @@ app.use('/api/owner', customerRoutes);
 app.use('/api/staff', taskRoutes);
 app.use('/api/staff', staffInventoryRoutes);
 app.use('/api/owner', orderRoutes);
+app.use('/api', expenseRoutes); // Added expense routes
 
 // Start the server
 const PORT = process.env.PORT || 5001;
