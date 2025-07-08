@@ -17,6 +17,8 @@ const FinancialOverview = () => {
     setFinancialData(dummyData);
   }, []);
 
+  // Render the financial overview chart
+  // This component displays a bar chart with income, expenses, and profit data
   return (    <div className="chart-wrapper">
       <h3 className="chart-title">Financial Overview</h3>
       <div className="chart-container">

@@ -13,6 +13,8 @@ const Cart = () => {
   const navigate = useNavigate();
   const { updateCartCount } = useCart();
 
+  // Fetch cart items when the component mounts
+  // This function retrieves the cart items from the backend API
   useEffect(() => {
     const fetchCartItems = async () => {
       const token = localStorage.getItem('token');
@@ -50,6 +52,8 @@ const Cart = () => {
     fetchCartItems();
   }, [updateCartCount]);
 
+  // Handle item selection, quantity changes, and removal
+  // This function manages the selection of items, their quantities, and removal from the cart
   const handleSelectItem = (itemId) => {
     setSelectedItems(prev => {
       const updated = prev.includes(itemId)
@@ -66,8 +70,8 @@ const Cart = () => {
 
   const handleQuantityChange = (itemId, value, max) => {
     const qty = parseInt(value, 10);
-    if (!isNaN(qty) && qty >= 1 && qty <= max) {
-      setQuantities(q => ({ ...q, [itemId]: qty }));
+    if (!isNaN(qty) && qty >= 1 && qty <= max) { // Ensure quantity is within valid range
+      setQuantities(q => ({ ...q, [itemId]: qty })); // Update quantity for the specific item
     }
   };
 
@@ -88,8 +92,8 @@ const Cart = () => {
         throw new Error(data.message || 'Failed to remove item');
       }
 
-      setCartItems(prev => prev.filter(item => item.CartID !== cartId));
-      setSelectedItems(prev => prev.filter(id => id !== cartId));
+      setCartItems(prev => prev.filter(item => item.CartID !== cartId)); // Remove item from cartItems state
+      setSelectedItems(prev => prev.filter(id => id !== cartId)); // Remove item from selectedItems state
       const updatedQuantities = { ...quantities };
       delete updatedQuantities[cartId];
       setQuantities(updatedQuantities);
@@ -100,6 +104,8 @@ const Cart = () => {
     }
   };
 
+  // Calculate total amount based on selected items and their quantities
+  // This effect runs whenever selected items or quantities change
   useEffect(() => {
     const total = cartItems
       .filter(item => selectedItems.includes(item.CartID))
@@ -150,6 +156,8 @@ const Cart = () => {
     );
   }
 
+  // Render the cart items
+  // Displays a list of items in the cart, allows selection, quantity adjustment, and removal
   return (
     <div className="cart-container">
       <h2>Your Cart</h2>

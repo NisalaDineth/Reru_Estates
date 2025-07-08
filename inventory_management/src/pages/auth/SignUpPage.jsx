@@ -3,6 +3,8 @@ import { useNavigate, Link } from "react-router-dom";
 import { FaUser, FaPhone, FaEnvelope, FaLock, FaExclamationCircle, FaCheckCircle } from "react-icons/fa";
 import "./SignUpPage.css";
 
+// SignUpPage component for user registration
+// This component handles user registration, form submission, and validation
 const SignUpPage = () => {
   const [username, setUsername] = useState("");
   const [phone, setPhone] = useState("");
@@ -115,6 +117,8 @@ const validateEmail = (email) => {
     }
   };
 
+  // Render the sign-up form
+  // Displays input fields for username, phone, email, and password, error messages, and a submit button
   return (
     <div className="auth-container">
       <div className="auth-card">

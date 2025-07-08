@@ -26,6 +26,8 @@ const CustomerDashboard = () => {
 
   ];
 
+  // Render the customer dashboard with navigation options
+  // This component provides links to available crops and order history
   return (
     <div className="customer-dashboard">
       <div className="dashboard-header">

@@ -35,6 +35,8 @@ const OwnerCustomerManagement = () => {
         fetchCustomers();
     }, []);
 
+    // Function to handle status toggle for customers
+    // This function sends a PATCH request to update the customer's active status
     const handleStatusToggle = async (customerID, currentStatus) => {
         const newStatus = !currentStatus;
         const actionText = newStatus ? "activate" : "deactivate";
@@ -85,6 +87,8 @@ const OwnerCustomerManagement = () => {
         }
     };
 
+    // Function to handle adding a new customer
+    // This function sends a POST request to create a new customer
     const handleAddCustomer = async () => {
         try {
             // Basic validation
@@ -118,6 +122,8 @@ const OwnerCustomerManagement = () => {
     if (loading) return <div className="customer-container">Loading customer data...</div>;
     if (error) return <div className="customer-container">Error: {error}</div>;
 
+    // Render the customer management interface
+    // This component displays a list of customers with options to add, activate, or deactivate them
     return (
         <div className="customer-container">
             <h1 className="customer-header">Owner Customer Management</h1>

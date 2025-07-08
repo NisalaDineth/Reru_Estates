@@ -64,13 +64,13 @@ function OwnerDashboard() {
       title: 'Order Management',
       description: 'Manage customer orders',
       icon: <FaClipboardList className="card-icon" />
-    },
-    {
-      id: 'finance',
-      title: 'Financial Management',
-      description: 'Track income and expenses',
-      icon: <FaChartLine className="card-icon" />
     }
+    // {
+    //   id: 'finance',
+    //   title: 'Financial Management',
+    //   description: 'Track income and expenses',
+    //   icon: <FaChartLine className="card-icon" />
+    // }
   ];
 
   const handleCardClick = (id) => {

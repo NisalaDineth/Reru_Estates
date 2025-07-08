@@ -1,5 +1,8 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 
+// CartContext provides a way to manage the cart state across the application
+// It allows components to access and update the cart count, refresh cart items, and clear the cart
+// This context is used to share cart-related data and functions with components that need it
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {

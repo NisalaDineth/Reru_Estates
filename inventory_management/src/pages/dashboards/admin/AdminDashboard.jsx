@@ -5,6 +5,8 @@ import './AdminDashboard.css';
 const AdminDashboard = () => {
   const navigate = useNavigate();
 
+  // Render the admin dashboard with navigation options
+  // This component provides links to inventory management and financial reports
   return (
     <div>
       <h2>Admin Dashboard</h2>

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useCart } from '../pages/dashboards/customer/cart/cartcontext';
 import './CartBadge.css';
 
+// CartBadge component to display the number of items in the cart
 const CartBadge = () => {
   const { cartCount, updateCartCount } = useCart();
   

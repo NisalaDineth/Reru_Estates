@@ -35,13 +35,14 @@ const PurchaseHistory = () => {
           throw new Error('Invalid data format received from server');
         }
 
-        // Group items by purchase ID
+        // Group purchases by purchase_id
         const groupedPurchases = data.reduce((acc, item) => {
           console.log('Processing purchase item:', item);
           const purchase = acc.find(p => p.id === item.purchase_id);
+          // If purchase exists, add item to its items array
           if (purchase) {
             purchase.items.push({
-              cropName: item.CropName || item.crop_name || 'Unknown Product',
+              cropName: item.CropName || item.crop_name || 'Unknown Product', // Fallback for crop name
               quantity: Number(item.quantity) || 0,
               unitPrice: Number(item.unit_price) || 0,
               subtotal: Number(item.subtotal) || 0,

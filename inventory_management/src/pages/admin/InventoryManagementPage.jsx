@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { FaPlus, FaEdit, FaTrash, FaSave, FaTimes, FaLeaf } from 'react-icons/fa';
 import './InventoryManagementPage.css';
 
+// InventoryManagementPage component for managing inventory
+// Allows owners to add, edit, and delete harvest items
 const InventoryManagementPage = () => {
   const [inventory, setInventory] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -30,10 +32,14 @@ const InventoryManagementPage = () => {
     }
   };
 
+  // Fetch inventory on component mount
+  // This will load the inventory data when the page is first rendered
   useEffect(() => {
     fetchInventory();
   }, []);
 
+  // Handle input changes for new item form
+  // Updates the newItem state with the input values
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewItem(prev => ({
@@ -42,6 +48,8 @@ const InventoryManagementPage = () => {
     }));
   };
 
+  // Add a new harvest item to the inventory
+  // Validates input and sends a POST request to the server
   const addItem = async () => {
     if (!newItem.cropName || !newItem.category || newItem.quantityAvailable < 0 || newItem.unitPrice < 0) {
       alert('Please enter valid item details');
@@ -70,6 +78,8 @@ const InventoryManagementPage = () => {
     }
   };
 
+  // Start editing an existing inventory item
+  // Sets the editingItem state with the item details
   const startEdit = (item) => {
     setEditingItem({
       ...item,
@@ -77,6 +87,8 @@ const InventoryManagementPage = () => {
     });
   };
 
+  // Handle changes in the edit form
+  // Updates the editingItem state with the input values
   const handleEditChange = (e) => {
     if (!editingItem) return;
     const { name, value } = e.target;
@@ -86,6 +98,8 @@ const InventoryManagementPage = () => {
     });
   };
 
+  // Update an existing inventory item
+  // Validates input and sends a PUT request to the server
   const updateItem = async () => {
     if (!editingItem) return;
     if (!editingItem.cropName || !editingItem.category || editingItem.quantityAvailable < 0 || editingItem.unitPrice < 0) {
@@ -109,6 +123,8 @@ const InventoryManagementPage = () => {
     }
   };
 
+  // Delete an inventory item
+  // Confirms deletion and sends a DELETE request to the server
   const deleteItem = async (id) => {
     if (!window.confirm('Are you sure you want to delete this item?')) return;
     try {
@@ -137,6 +153,8 @@ const InventoryManagementPage = () => {
     </div>
   );
 
+  // Render the inventory management page
+  // Displays the form to add new harvest items and the current inventory list
   return (
     <div className="inventory-management-page">
       <div className="page-header">

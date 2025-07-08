@@ -3,6 +3,8 @@ import { useNavigate, Link } from "react-router-dom";
 import { FaEnvelope, FaLock, FaExclamationCircle } from "react-icons/fa";
 import "./LoginPage.css";
 
+// Login component for user authentication
+// This component handles user login, form submission, and error handling
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -13,6 +15,7 @@ const Login = () => {
     setError(null);
     setIsLoading(true);
   
+    // Validate email format
     try {
       console.log("Attempting login with:", { email });
       const response = await fetch('http://localhost:5001/api/auth/login', {
@@ -38,7 +41,7 @@ const Login = () => {
         }
       }
       
-      // Check if customer account is inactive (in case backend doesn't properly check)
+      // Check if customer account is inactive
       if (data.role === "customer" && data.isActive === 0) {
         throw new Error("Your account has been deactivated. Please contact support.");
       }
@@ -48,7 +51,7 @@ const Login = () => {
       localStorage.setItem("role", data.role);
       
       const userRole = data.role;
-      // Store customer details properly
+      // Navigate based on user role
       if (userRole === "customer") {
         navigate("/customer/dashboard");
       } else if (userRole === "owner") {
@@ -59,6 +62,7 @@ const Login = () => {
         throw new Error("Invalid role");
       }    } catch (err) {
       console.error("Login failed:", err);
+      // Handle specific error cases
       if (err.name === 'TypeError' && err.message.includes('Failed to fetch')) {
         setError("Network error: Could not connect to the server. Please check your connection or try again later.");
         console.error("Network error details:", err);
@@ -70,6 +74,8 @@ const Login = () => {
     }
   };
 
+  // Render the login form
+  // Displays input fields for email and password, error messages, and a submit button
   return (
     <div className="login-page">
       <div className="login-container">        <div className="login-header">

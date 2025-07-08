@@ -3,6 +3,8 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useCart } from './cartcontext';
 import './PaymentSuccess.css';
 
+// PaymentSuccess component to handle the payment success page
+// This component verifies the payment status and updates the cart accordingly
 const PaymentSuccess = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -106,11 +108,11 @@ const PaymentSuccess = () => {
     };
     
     handlePaymentSuccess();
-  }, [clearCart, searchParams]);
+  }, [clearCart, searchParams]); // This effect runs once on component mount to handle payment success
   
   // Enhanced retry mechanism with progressive delay
 const MAX_RETRIES = 5;
-const BASE_DELAY = 1000; // Start with 1 second
+const BASE_DELAY = 1000;
 
 const verifyPaymentWithRetry = async (sessionId, token, retryCount = 0, onStatusUpdate = null) => {
   try {

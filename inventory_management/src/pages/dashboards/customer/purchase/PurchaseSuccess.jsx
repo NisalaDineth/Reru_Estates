@@ -7,6 +7,8 @@ const PurchaseSuccess = () => {
   const navigate = useNavigate();
   const [countdown, setCountdown] = useState(5);
 
+  // Check if the purchase was successful
+  // This component displays a success message and redirects to purchase history after a countdown
   useEffect(() => {
     const timer = setInterval(() => {
       setCountdown((prev) => {
@@ -15,13 +17,15 @@ const PurchaseSuccess = () => {
           navigate('/customer/purchase-history');
           return 0;
         }
-        return prev - 1;
+        return prev - 1; // Decrement countdown
       });
     }, 1000);
 
     return () => clearInterval(timer);
   }, [navigate]);
 
+  // Check if the purchase data is available in the location state
+  // If not, redirect to the purchase history page
   return (
     <div className="purchase-success-container">
       <div className="success-card">

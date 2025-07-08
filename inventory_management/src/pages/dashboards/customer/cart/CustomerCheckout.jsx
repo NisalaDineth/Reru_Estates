@@ -3,8 +3,11 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { loadStripe } from '@stripe/stripe-js';
 import './CustomerCheckout.css'; // Import the CSS file
 
-const stripePromise = loadStripe('pk_test_51RP7LrQhVN6fGceWfR8Qhj1f6uQGFNQdml4pzNGG8lve1YHDmUV2nqc1TUezGQQuTEzlRENbChRIzupXYlxg4JTm00TayGLaOc'); // Replace with your key
+// Initialize Stripe
+const stripePromise = loadStripe('pk_test_51RP7LrQhVN6fGceWfR8Qhj1f6uQGFNQdml4pzNGG8lve1YHDmUV2nqc1TUezGQQuTEzlRENbChRIzupXYlxg4JTm00TayGLaOc');
 
+// Checkout component for handling the order summary and payment process
+// This component retrieves the products and total amount from the location state,
 const Checkout = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -32,13 +35,16 @@ const handleConfirmOrder = async () => {
       throw new Error(`Payment session creation failed: ${response.status} - ${errorData}`);
     }
 
+    // Parse the session data returned from the server
     const session = await response.json();
     console.log("Session data:", session);
+    
     
     if (!session.id) {
       throw new Error("Invalid session data returned from server");
     }
 
+    // Redirect to Stripe Checkout
     const { error } = await stripe.redirectToCheckout({ sessionId: session.id });
     
     if (error) {
@@ -52,6 +58,8 @@ const handleConfirmOrder = async () => {
 };
 
 
+  // Handle order confirmation and payment processing
+  // This function is triggered when the user clicks the "Confirm Order" button
   return (
     <div className="checkout-container">
       <h2 className="checkout-header">Order Summary</h2>

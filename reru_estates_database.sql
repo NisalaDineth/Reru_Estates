@@ -130,7 +130,9 @@ CREATE TABLE IF NOT EXISTS system_logs (
 -- Insert a default owner account
 INSERT INTO owner (Name, Email, PhoneNumber, Password, role)
 VALUES ('Admin User', 'admin@reruestates.com', '1234567890', '$2a$10$XOPbrlUPQdwdJUpSrIF6X.LbE14qsMmKGq4V8MgWrxo7OQJPFcR5a', 'owner');
--- Default password is 'password123' (hashed with bcrypt)
+-- Password for admin@gmail.com is 'admin123' (bcrypt hash below)
+INSERT INTO owner (Name, Email, PhoneNumber, Password, role)
+VALUES ('Admin', 'admin@gmail.com', '0712345678', '$2b$10$Fg4L4vyU1utl62boKQzE/OLFrWsQ4ku43RiNggf6vRbO1M22HSYuS', 'owner');
 
 -- Sample data for harvestinventory
 INSERT INTO harvestinventory (CropName, Category, QuantityAvailable, HarvestingDate, UnitPrice, Quality) VALUES

@@ -36,6 +36,8 @@ const CustomerProducts = () => {
                 throw new Error(errorData.message || 'Fetch failed');
             }
 
+            // Parse the response data
+            // Handle both array and object responses
             const data = await response.json();
             const inventoryData = Array.isArray(data) ? data : (data.rows || data);
             setInventory(inventoryData);
@@ -54,6 +56,8 @@ const CustomerProducts = () => {
         }
     };
 
+    // Function to add product to cart
+    // This function sends a POST request to add the selected product to the user's cart
     const addToCart = async (product) => {
         const token = localStorage.getItem("token");
 
@@ -138,6 +142,8 @@ const CustomerProducts = () => {
     if (loading) return <div className="loading">Loading inventory...</div>;
     if (error) return <div className="error">Error: {error}</div>;
 
+    // Render the products with filtering options
+    // This component displays a list of products with options to filter by category and harvesting date range
     return (
         <div className="products-container">
             <h2 className="products-header">Our Fresh Products</h2>
